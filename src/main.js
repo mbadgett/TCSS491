@@ -1,6 +1,6 @@
 var AM = new AssetManager();
 
-function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
+function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale, that) {
     this.spriteSheet = spriteSheet;
     this.frameWidth = frameWidth;
     this.frameDuration = frameDuration;
@@ -11,6 +11,7 @@ function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDurati
     this.elapsedTime = 0;
     this.loop = loop;
     this.scale = scale;
+    this.that = that;
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
@@ -19,39 +20,29 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
         if (this.loop) this.elapsedTime = 0;
     }
 
+
     var frame = this.currentFrame();
     var xindex = 0;
     var yindex = 0;
     xindex = frame % this.sheetWidth;
     yindex = Math.floor(frame / this.sheetWidth);
-    //var img = new Image();
-    
-    ctx.drawImage(this.spriteSheet,
-                 xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
-                 this.frameWidth, this.frameHeight,
-                 x, y,
-                 this.frameWidth * this.scale,
-                 this.frameHeight * this.scale);
-}
+    if (this.that !== null) {
+        var canvas = this.that.rotateAndCache(this.that, xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
+            this.frameWidth, this.frameHeight, this.that.myAngle);
+        var image = new Image();
+        image.src = canvas.toDataURL("image/png");
 
-Animation.prototype.drawFrameRotated = function (tick, ctx, x, y, angle) {
-    this.elapsedTime += tick;
-    if (this.isDone()) {
-        if (this.loop) this.elapsedTime = 0;
+        ctx.drawImage(image, x, y, this.frameWidth * this.scale,
+            this.frameHeight * this.scale);
     }
-    var frame = this.currentFrame();
-    var xindex = 0;
-    var yindex = 0;
-    xindex = frame % this.sheetWidth;
-    yindex = Math.floor(frame / this.sheetWidth);
-
-    
-    ctx.drawImage(this.spriteSheet,
-        xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
-        this.frameWidth, this.frameHeight,
-        x, y,
-        this.frameWidth * this.scale,
-        this.frameHeight * this.scale);
+    else {
+        ctx.drawImage(this.spriteSheet,
+            xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
+            this.frameWidth, this.frameHeight,
+            x, y,
+            this.frameWidth * this.scale,
+            this.frameHeight * this.scale);
+    }
 }
 
 Animation.prototype.currentFrame = function () {
@@ -81,15 +72,16 @@ Background.prototype.update = function () {
 
 // inheritance
 function Survivor(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4);
-    this.animation2 = new Animation(AM.getAsset("./img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4);
+    this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4,this);
+    this.animation2 = new Animation(AM.getAsset("./img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
     this.speed = 150;
+    this.myAngle = 0;
     this.w = false;
     this.s = false;
     this.a = false;
     this.d = false;
-    //this.myDir = 0;
+    this.myDir = 0;
     this.ctx = game.ctx;
     var that = this;
     this.ctx.canvas.addEventListener("keydown", function (e) {
@@ -128,31 +120,49 @@ function Survivor(game, spritesheet) {
             that.animation = that.animation3;
         }
         }, false);
+    // this.ctx.canvas.addEventListener("mousemove", function (e) {
+    //     var x = e.x;
+    //     var y = e.y;
+    //     that.myAngle = Math.atan2(x - that.x, y - that.y);
+    // },false);
     Entity.call(this, game, 0, 250);
 }
 
 Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
+Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
+    var offscreenCanvas = document.createElement('canvas');
+    var size = Math.max(that.animation.frameWidth, that.animation.frameHeight);
+    offscreenCanvas.width = size;
+    offscreenCanvas.height = size;
+    var offscreenCtx = offscreenCanvas.getContext('2d');
+    offscreenCtx.save();
+    offscreenCtx.translate(size / 2, size / 2);
+    offscreenCtx.rotate(angle);
+    offscreenCtx.translate(0, 0);
+    offscreenCtx.drawImage(that.animation.spriteSheet, sx, sy, sw, sh, -(that.animation.frameWidth / 2),
+        -(that.animation.frameHeight / 2), that.animation.frameWidth, that.animation.frameHeight);
+    offscreenCtx.restore();
+    //offscreenCtx.strokeStyle = "red";
+    //offscreenCtx.strokeRect(0,0,size,size);
+    return offscreenCanvas;
+}
 
 Survivor.prototype.update = function () {
     if (this.d === true) {
         this.x += this.speed * this.game.clockTick;
-        //if (this.x > 600) this.myDir = 90;
-
-    } if (this.s === true) {
-        this.y += this.speed * this.game.clockTick;
-        //if (this.y > 400) this.myDir = 180;
-    } if (this.a === true) {
-        this.x -= this.speed * this.game.clockTick;
-        //if (this.x < 50) this.myDir = 270;
-    } if (this.w === true) {
-        this.y -= this.speed * this.game.clockTick;
-        //if (this.y < 50) this.myDir = 360;
     }
-    this.ctx.save();
-    this.ctx.rotate(.5);
+    if (this.s === true) {
+        this.y += this.speed * this.game.clockTick;
+    } 
+    if (this.a === true) {
+        this.x -= this.speed * this.game.clockTick;
+    } 
+    if (this.w === true) {
+        this.y -= this.speed * this.game.clockTick;
+    }
+
     Entity.prototype.update.call(this);
-    this.ctx.restore();
 }
 
 Survivor.prototype.draw = function () {
@@ -161,8 +171,8 @@ Survivor.prototype.draw = function () {
 }
 
 function Feet(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 258, 220, 1, 0.1, 1, true, .4);
-    this.animation2 = new Animation(AM.getAsset("./img/survivor_feet_walking_sprite.png"), 258, 220, 6, 0.1, 18, true, .4);
+    this.animation = new Animation(spritesheet, 258, 220, 1, 0.1, 1, true, .4, null);
+    this.animation2 = new Animation(AM.getAsset("./img/survivor_feet_walking_sprite.png"), 258, 220, 6, 0.1, 18, true, .4,null);
     this.animation3 = this.animation;
     this.speed = 150;
     this.w = false;
