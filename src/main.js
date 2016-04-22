@@ -244,11 +244,65 @@ Feet.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     Entity.prototype.draw.call(this);
 }
+
+function zombie(game, spritesheet){
+    this.animation = new Animation(spritesheet, 288, 314, 5, 0.11, 15, true, 0.4,null);
+    this.speed = 70;
+    this.direction = 1;
+    //this.x = 1;
+    //this.y = 1;
+    this.ctx = game.ctx;
+    Entity.call(this,game,0,50);
+}
+
+zombie.prototype = new Entity();
+zombie.prototype.constructor = zombie;
+
+zombie.prototype.update = function() {
+    this.x += this.game.clockTick * this.speed;
+    this.y += this.game.clockTick * this.speed;
+
+    if (this.x > 650) {
+        this.direction += -1;
+        this.x -= this.game.clockTick * this.speed;
+    } else if (this.x < 10) {
+        this.direction += 1;
+        this.x += this.game.clockTick * this.speed;
+    }  else if (this.y > 510) {
+        this.direction -= 1;
+        this.y -= this.game.clockTick * this.speed;
+    } else if (this.y < 10) {
+        this.direction += 1;
+        this.y -= this.game.clockTick * this.speed;
+    } else if (this.x > 200 && this.x < 400) {
+        this.y  += this.game.clockTick * this.speed;
+    } else if (this.x > 100 && this.x < 200) {
+        this.y -= this.game.clockTick * this.speed;
+    } else if  (this.x > 450 && this.x < 525) {
+        this.y -=this.game.clockTick * this.speed;
+        this.x -= this.game.clockTick * this.speed;
+    } else if (this.y > 100 && this.y < 250) {
+        this.x += this.game.clockTick * this.speed;
+    } else if (this.y > 250 && this.y < 350) {
+        this.y -= this.game.clockTick * this.speed;
+    }
+    
+    this.x += 1 * this.direction;
+    this.y += 1 * this.direction;
+    Entity.prototype.update.call(this);
+}
+
+zombie.prototype.draw = function () {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    Entity.prototype.draw.call(this);
+}
+
 AM.queueDownload("./img/background.jpg");
 AM.queueDownload("./img/survivor_move_handgun_sprite.png");
 AM.queueDownload("./img/survivor_handgun_idle_sprite.png");
 AM.queueDownload("./img/survivor_feet_walking_sprite.png");
 AM.queueDownload("./img/survivor_idle.png");
+AM.queueDownload("./img/zombie_sprite.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -261,8 +315,7 @@ AM.downloadAll(function () {
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/background.jpg")));
     gameEngine.addEntity(new Feet(gameEngine, AM.getAsset("./img/survivor_idle.png")));
     gameEngine.addEntity(new Survivor(gameEngine, AM.getAsset("./img/survivor_handgun_idle_sprite.png")));
-
-
-
+    gameEngine.addEntity(new zombie(gameEngine, AM.getAsset("./img/zombie_sprite.png")));
+    
     console.log("All Done!");
 });
