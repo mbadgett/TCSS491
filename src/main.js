@@ -120,11 +120,11 @@ function Survivor(game, spritesheet) {
             that.animation = that.animation3;
         }
         }, false);
-    // this.ctx.canvas.addEventListener("mousemove", function (e) {
-    //     var x = e.x;
-    //     var y = e.y;
-    //     that.myAngle = Math.atan2(x - that.x, y - that.y);
-    // },false);
+    this.ctx.canvas.addEventListener("mousemove", function (e) {
+        var x = e.x - that.x - 129 * that.animation.scale;
+        var y = e.y - that.y - 110 * that.animation.scale;
+        that.myAngle = 360 - Math.atan2(x, y) % 360;
+    },false);
     Entity.call(this, game, 0, 250);
 }
 
