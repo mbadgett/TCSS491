@@ -286,9 +286,9 @@ zombie.prototype.update = function() {
     } else if (this.y > 250 && this.y < 350) {
         this.y -= this.game.clockTick * this.speed;
     }
-    
-    this.x += 1 * this.direction;
-    this.y += 1 * this.direction;
+
+    this.x += 2 * this.direction;
+    this.y += 2 * this.direction;
     Entity.prototype.update.call(this);
 }
 
