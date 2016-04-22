@@ -73,7 +73,7 @@ Background.prototype.update = function () {
 // inheritance
 function Survivor(game, spritesheet) {
     this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4,this);
-    this.animation2 = new Animation(AM.getAsset("./img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
+    this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
     this.speed = 150;
     this.myAngle = 0;
@@ -172,7 +172,7 @@ Survivor.prototype.draw = function () {
 
 function Feet(game, spritesheet) {
     this.animation = new Animation(spritesheet, 258, 220, 1, 0.1, 1, true, .4, null);
-    this.animation2 = new Animation(AM.getAsset("./img/survivor_feet_walking_sprite.png"), 258, 220, 6, 0.1, 18, true, .4,null);
+    this.animation2 = new Animation(AM.getAsset("./src/img/survivor_feet_walking_sprite.png"), 258, 220, 6, 0.1, 18, true, .4,null);
     this.animation3 = this.animation;
     this.speed = 150;
     this.w = false;
@@ -297,12 +297,12 @@ zombie.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 
-AM.queueDownload("./img/background.jpg");
-AM.queueDownload("./img/survivor_move_handgun_sprite.png");
-AM.queueDownload("./img/survivor_handgun_idle_sprite.png");
-AM.queueDownload("./img/survivor_feet_walking_sprite.png");
-AM.queueDownload("./img/survivor_idle.png");
-AM.queueDownload("./img/zombie_sprite.png");
+AM.queueDownload("./src/img/background.jpg");
+AM.queueDownload("./src/img/survivor_move_handgun_sprite.png");
+AM.queueDownload("./src/img/survivor_handgun_idle_sprite.png");
+AM.queueDownload("./src/img/survivor_feet_walking_sprite.png");
+AM.queueDownload("./src/img/survivor_idle.png");
+AM.queueDownload("./src/img/zombie_sprite.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -312,10 +312,10 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
-    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/background.jpg")));
-    gameEngine.addEntity(new Feet(gameEngine, AM.getAsset("./img/survivor_idle.png")));
-    gameEngine.addEntity(new Survivor(gameEngine, AM.getAsset("./img/survivor_handgun_idle_sprite.png")));
-    gameEngine.addEntity(new zombie(gameEngine, AM.getAsset("./img/zombie_sprite.png")));
+    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
+    gameEngine.addEntity(new Feet(gameEngine, AM.getAsset("./src/img/survivor_idle.png")));
+    gameEngine.addEntity(new Survivor(gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png")));
+    gameEngine.addEntity(new zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
     
     console.log("All Done!");
 });
