@@ -127,9 +127,9 @@ function Survivor(game, spritesheet) {
     this.ctx.canvas.addEventListener("mousemove", function (e) {
         that.mouseX = e.x - 8;
         that.mouseY = e.y - 8;
-        var x = (e.x - that.x + (that.animation.frameWidth/2)) * that.animation.scale;
-        var y = (e.y - that.y + (that.animation.frameHeight/2)) * that.animation.scale;
-        that.myAngle = (Math.atan2(y, x) * 180 / Math.PI) % 360;
+        var x = (that.x +((that.animation.frameWidth/2) * that.animation.scale)) - e.x;
+        var y = (that.y + ((that.animation.frameHeight/2) * that.animation.scale)) - e.y;
+        that.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
         console.log(that.myAngle + "\n\n");
     },false);
     Entity.call(this, game, 0, 250);
