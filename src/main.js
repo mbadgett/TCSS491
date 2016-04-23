@@ -145,7 +145,7 @@ Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     var offscreenCtx = offscreenCanvas.getContext('2d');
     offscreenCtx.save();
     offscreenCtx.translate(size / 2, size / 2);
-    offscreenCtx.rotate(angle);
+    offscreenCtx.rotate(angle*Math.PI/180);
     offscreenCtx.translate(0, 0);
     offscreenCtx.drawImage(that.animation.spriteSheet, sx, sy, sw, sh, -(that.animation.frameWidth / 2),
         -(that.animation.frameHeight / 2), that.animation.frameWidth, that.animation.frameHeight);
