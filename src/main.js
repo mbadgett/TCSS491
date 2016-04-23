@@ -84,6 +84,10 @@ function Survivor(game, spritesheet) {
     this.myDir = 0;
     this.ctx = game.ctx;
     var that = this;
+
+    var mouseX = 0;
+    var mouseY = 0;
+
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.code === "KeyD") {
             that.d = true;
@@ -120,11 +124,10 @@ function Survivor(game, spritesheet) {
             that.animation = that.animation3;
         }
         }, false);
-    // this.ctx.canvas.addEventListener("mousemove", function (e) {
-    //     var x = e.x;
-    //     var y = e.y;
-    //     that.myAngle = Math.atan2(x - that.x, y - that.y);
-    // },false);
+    this.ctx.canvas.addEventListener("mousemove", function (e) {
+        that.mouseX = e.x - 8;
+        that.mouseY = e.y - 8;
+    },false);
     Entity.call(this, game, 0, 250);
 }
 
@@ -138,7 +141,7 @@ Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     var offscreenCtx = offscreenCanvas.getContext('2d');
     offscreenCtx.save();
     offscreenCtx.translate(size / 2, size / 2);
-    offscreenCtx.rotate(angle);
+    offscreenCtx.rotate(angle*Math.PI/180);
     offscreenCtx.translate(0, 0);
     offscreenCtx.drawImage(that.animation.spriteSheet, sx, sy, sw, sh, -(that.animation.frameWidth / 2),
         -(that.animation.frameHeight / 2), that.animation.frameWidth, that.animation.frameHeight);
@@ -161,12 +164,21 @@ Survivor.prototype.update = function () {
     if (this.w === true) {
         this.y -= this.speed * this.game.clockTick;
     }
+    //Update my angle
+    var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) - this.mouseX;
+    var y = (this.y + ((this.animation.frameHeight/2) * this.animation.scale)) - this.mouseY;
+    this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
+
 
     Entity.prototype.update.call(this);
 }
 
 Survivor.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    this.game.ctx.beginPath();
+    this.game.ctx.moveTo(this.x + ((this.animation.frameWidth/2) * this.animation.scale), this.y + ((this.animation.frameHeight/2) * this.animation.scale));
+    this.game.ctx.lineTo(this.mouseX, this.mouseY);
+    this.game.ctx.stroke();
     Entity.prototype.draw.call(this);
 }
 
