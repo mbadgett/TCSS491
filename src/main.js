@@ -127,10 +127,6 @@ function Survivor(game, spritesheet) {
     this.ctx.canvas.addEventListener("mousemove", function (e) {
         that.mouseX = e.x - 8;
         that.mouseY = e.y - 8;
-        var x = (that.x +((that.animation.frameWidth/2) * that.animation.scale)) - e.x;
-        var y = (that.y + ((that.animation.frameHeight/2) * that.animation.scale)) - e.y;
-        that.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
-        console.log(that.myAngle + "\n\n");
     },false);
     Entity.call(this, game, 0, 250);
 }
@@ -168,6 +164,11 @@ Survivor.prototype.update = function () {
     if (this.w === true) {
         this.y -= this.speed * this.game.clockTick;
     }
+    //Update my angle
+    var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) - this.mouseX;
+    var y = (this.y + ((this.animation.frameHeight/2) * this.animation.scale)) - this.mouseY;
+    this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
+
 
     Entity.prototype.update.call(this);
 }
