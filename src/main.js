@@ -29,10 +29,8 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     if (this.that !== null) {
         var canvas = this.that.rotateAndCache(this.that, xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
             this.frameWidth, this.frameHeight, this.that.myAngle);
-        var image = new Image();
-        image.src = canvas.toDataURL("image/png");
 
-        ctx.drawImage(image, x, y, this.frameWidth * this.scale,
+        ctx.drawImage(canvas, x, y, this.frameWidth * this.scale,
             this.frameHeight * this.scale);
     }
     else {
