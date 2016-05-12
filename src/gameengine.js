@@ -11,6 +11,9 @@ window.requestAnimFrame = (function () {
 
 function GameEngine() {
     this.entities = [];
+    this.zombies = [];
+    this.player = null;
+    this.staticEntities = [];
     this.ctx = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
@@ -86,7 +89,13 @@ function Entity(game, x, y) {
     this.removeFromWorld = false;
 }
 
+Entity.prototype.detectCollision = function (theOther) {}
+
+
 Entity.prototype.update = function () {
+    for (Entity in this.game.entities) {
+        this.detectCollision();
+    }
 }
 
 Entity.prototype.draw = function (ctx) {

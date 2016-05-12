@@ -75,6 +75,7 @@ function Survivor(game, spritesheet) {
     this.animation3 = this.animation;
     this.speed = 150;
     this.myAngle = 0;
+    this.radius = 258;
     this.w = false;
     this.s = false;
     this.a = false;
@@ -149,6 +150,22 @@ Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     return offscreenCanvas;
 }
 
+Survivor.prototype.detectCollision = function (theOther) {
+    //If the other object is a square then let the square handle collision.
+    if (theOther.shape === "square") {
+        theOther.detectCollision(this);
+    } else {
+        var vX = theOther.x - this.x;
+        var vY = theOther.y - this.y;
+        var dist = Math.sqrt(Math.pow(vX, 2) + Math.pow(vY, 2));
+        var collisionRange = this.radius + theOther.radius;
+
+        if (dist < collisionRange) {
+            1===1;
+        }
+    }
+}
+
 Survivor.prototype.update = function () {
     if (this.d === true) {
         this.x += this.speed * this.game.clockTick;
@@ -166,8 +183,6 @@ Survivor.prototype.update = function () {
     var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) - this.mouseX;
     var y = (this.y + ((this.animation.frameHeight/2) * this.animation.scale)) - this.mouseY;
     this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
-
-
     Entity.prototype.update.call(this);
 }
 
@@ -180,84 +195,10 @@ Survivor.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 
-function Feet(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 258, 220, 1, 0.1, 1, true, .4, null);
-    this.animation2 = new Animation(AM.getAsset("./src/img/survivor_feet_walking_sprite.png"), 258, 220, 6, 0.1, 18, true, .4,null);
-    this.animation3 = this.animation;
-    this.speed = 150;
-    this.w = false;
-    this.s = false;
-    this.a = false;
-    this.d = false;
-    this.ctx = game.ctx;
-    var that = this;
-    this.ctx.canvas.addEventListener("keydown", function (e) {
-        if (e.code === "KeyD") {
-            that.d = true;
-            that.animation = that.animation2;
-        }
-        if (e.code === "KeyW") {
-            that.w = true;
-            that.animation = that.animation2;
-        }
-        if (e.code === "KeyA") {
-            that.a = true;
-            that.animation = that.animation2;
-        }
-        if (e.code === "KeyS") {
-            that.s = true;
-            that.animation = that.animation2;
-        }
-    }, false);
-    this.ctx.canvas.addEventListener("keyup", function (e) {
-        if (e.code === "KeyD") {
-            that.d = false;
-            that.animation = that.animation3;
-        }
-        if (e.code === "KeyW") {
-            that.w = false;
-            that.animation = that.animation3;
-        }
-        if (e.code === "KeyA") {
-            that.a = false;
-            that.animation = that.animation3;
-        }
-        if (e.code === "KeyS") {
-            that.s = false;
-            that.animation = that.animation3;
-        }
-    }, false);
-    Entity.call(this, game, 0, 250);
-}
-
-Feet.prototype = new Entity();
-Feet.prototype.constructor = Feet;
-
-Feet.prototype.update = function () {
-    if (this.d === true) {
-        this.x += this.speed * this.game.clockTick;
-        //if (this.x > 600) this.myDir = 90;
-    } if (this.s === true) {
-        this.y += this.speed * this.game.clockTick;
-        //if (this.y > 400) this.myDir = 180;
-    } if (this.a === true) {
-        this.x -= this.speed * this.game.clockTick;
-        //if (this.x < 50) this.myDir = 270;
-    } if (this.w === true) {
-        this.y -= this.speed * this.game.clockTick;
-        //if (this.y < 50) this.myDir = 360;
-    }
-    Entity.prototype.update.call(this);
-}
-
-Feet.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-    Entity.prototype.draw.call(this);
-}
-
 function zombie(game, spritesheet){
     this.animation = new Animation(spritesheet, 288, 314, 5, 0.11, 15, true, 0.4,null);
     this.speed = 70;
+    this.game = game;
     this.direction = 1;
     //this.x = 1;
     //this.y = 1;
@@ -269,36 +210,7 @@ zombie.prototype = new Entity();
 zombie.prototype.constructor = zombie;
 
 zombie.prototype.update = function() {
-    this.x += this.game.clockTick * this.speed;
-    this.y += this.game.clockTick * this.speed;
-
-    if (this.x > 650) {
-        this.direction += -1;
-        this.x -= this.game.clockTick * this.speed;
-    } else if (this.x < 10) {
-        this.direction += 1;
-        this.x += this.game.clockTick * this.speed;
-    }  else if (this.y > 510) {
-        this.direction -= 1;
-        this.y -= this.game.clockTick * this.speed;
-    } else if (this.y < 10) {
-        this.direction += 1;
-        this.y -= this.game.clockTick * this.speed;
-    } else if (this.x > 200 && this.x < 400) {
-        this.y  += this.game.clockTick * this.speed;
-    } else if (this.x > 100 && this.x < 200) {
-        this.y -= this.game.clockTick * this.speed;
-    } else if  (this.x > 450 && this.x < 525) {
-        this.y -=this.game.clockTick * this.speed;
-        this.x -= this.game.clockTick * this.speed;
-    } else if (this.y > 100 && this.y < 250) {
-        this.x += this.game.clockTick * this.speed;
-    } else if (this.y > 250 && this.y < 350) {
-        this.y -= this.game.clockTick * this.speed;
-    }
-
-    this.x += 2 * this.direction;
-    this.y += 2 * this.direction;
+    
     Entity.prototype.update.call(this);
 }
 
@@ -323,9 +235,9 @@ AM.downloadAll(function () {
     gameEngine.start();
 
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
-    gameEngine.addEntity(new Feet(gameEngine, AM.getAsset("./src/img/survivor_idle.png")));
     gameEngine.addEntity(new Survivor(gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png")));
     gameEngine.addEntity(new zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
+
     
     console.log("All Done!");
 });
