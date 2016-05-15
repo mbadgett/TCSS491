@@ -1,5 +1,18 @@
 var AM = new AssetManager();
 
+function distance(a, b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+function angleFromVectors(aX, aY, bX, bY) {
+    var num = (aX * bX) + (aY * bY);
+    var denom = Math.sqrt((aX * aX) + (aY * aY)) * Math.sqrt((bX * bX) + (bY * bY));
+    var rtn = Math.acos(num / denom);
+    return rtn;
+}
+
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale, that) {
     this.spriteSheet = spriteSheet;
     this.frameWidth = frameWidth;
@@ -62,11 +75,14 @@ function Background(game, spritesheet) {
 
 Background.prototype.draw = function () {
     this.ctx.drawImage(this.spritesheet,
-                   this.x, this.y);
+                   this.x, this.y, 1600, 900);
 };
 
 Background.prototype.update = function () {
 };
+
+Background.prototype.detectCollision = function () {}
+
 
 // inheritance
 function Survivor(game, spritesheet) {
@@ -75,17 +91,15 @@ function Survivor(game, spritesheet) {
     this.animation3 = this.animation;
     this.speed = 150;
     this.myAngle = 0;
-    this.radius = 258;
+    this.radius = 129 * this.animation.scale;
     this.w = false;
     this.s = false;
     this.a = false;
     this.d = false;
-    this.myDir = 0;
     this.ctx = game.ctx;
+    this.mouseX = 0;
+    this.mouseY = 0;
     var that = this;
-
-    var mouseX = 0;
-    var mouseY = 0;
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.code === "KeyD") {
@@ -132,6 +146,24 @@ function Survivor(game, spritesheet) {
 
 Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
+
+Survivor.prototype.shoot = function (target) {
+    var relativeX = this.x + (this.animation.frameWidth/2) * this.animation.scale;
+    var relativeY = this.y + (this.animation.frameHeight/2) * this.animation.scale;
+    var targetVX = target.x - relativeX;
+    var targetVY = target.y - relativeY;
+    var shotVX = this.mouseX - relativeX;
+    var shotVY = this.mouseY - relativeY;
+    var vectorAngle = angleFromVectors(targetVX, targetVY, shotVX, shotVY);
+    var playerToTargetDist = distance({x : relativeX, y : relativeY}, {x : targetVX, y : targetVY});
+    var targetToLineDist = playerToTargetDist * Math.sin(vectorAngle);
+
+    if (targetToLineDist <= target.radius) {
+        return true;
+    }
+    else return false;
+
+}
 Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     var offscreenCanvas = document.createElement('canvas');
     var size = Math.max(that.animation.frameWidth, that.animation.frameHeight);
@@ -152,18 +184,19 @@ Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
 
 Survivor.prototype.detectCollision = function (theOther) {
     //If the other object is a square then let the square handle collision.
-    if (theOther.shape === "square") {
-        theOther.detectCollision(this);
-    } else {
-        var vX = theOther.x - this.x;
-        var vY = theOther.y - this.y;
-        var dist = Math.sqrt(Math.pow(vX, 2) + Math.pow(vY, 2));
-        var collisionRange = this.radius + theOther.radius;
+    // if (theOther.shape === "square") {
+    //     theOther.detectCollision(this);
+    // } else {
+        var dist = distance(this, theOther);
+        var collisionRange = this.radius;
 
         if (dist < collisionRange) {
-            1===1;
+            theOther.x += .03 * (theOther.x - this.x);
+            theOther.y += .03 * (theOther.y - this.y);
+            this.x -= .05 * (theOther.x - this.x);
+            this.y -= .05 * (theOther.y - this.y);
         }
-    }
+    //}
 }
 
 Survivor.prototype.update = function () {
@@ -172,10 +205,10 @@ Survivor.prototype.update = function () {
     }
     if (this.s === true) {
         this.y += this.speed * this.game.clockTick;
-    } 
+    }
     if (this.a === true) {
         this.x -= this.speed * this.game.clockTick;
-    } 
+    }
     if (this.w === true) {
         this.y -= this.speed * this.game.clockTick;
     }
@@ -195,26 +228,68 @@ Survivor.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 
-function zombie(game, spritesheet){
-    this.animation = new Animation(spritesheet, 288, 314, 5, 0.11, 15, true, 0.4,null);
-    this.speed = 70;
-    this.game = game;
-    this.direction = 1;
-    //this.x = 1;
-    //this.y = 1;
+function Zombie(game, spritesheet){
+    this.animation = new Animation(spritesheet, 288, 314, 5, 0.11, 15, true, 0.4,this);
+    this.speed = 1 + Math.random() * 3;
+    this.radius = 157 * this.animation.scale;
+    this.shape = "circle";
+    this.player = game.player;
     this.ctx = game.ctx;
-    Entity.call(this,game,0,50);
+    this.myAngle = 0;
+    Entity.call(this, game, Math.floor(Math.random() * 800), Math.floor(Math.random() * 600));
 }
 
-zombie.prototype = new Entity();
-zombie.prototype.constructor = zombie;
+Zombie.prototype = new Entity();
+Zombie.prototype.constructor = Zombie;
 
-zombie.prototype.update = function() {
-    
+Zombie.prototype.update = function() {
+    if (distance(this, this.player) > this.radius) {
+        this.x += this.speed * (this.player.x - this.x) /
+            (distance(this, this.player));
+        this.y += this.speed * (this.player.y - this.y) /
+            (distance(this, this.player));
+    }
+    var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) -
+        (this.player.x + (this.player.animation.frameWidth / 2) * this.player.animation.scale);
+    var y = (this.y + ((this.animation.frameHeight/2) * this.animation.scale)) -
+        (this.player.y + (this.player.animation.frameHeight / 2) * this.player.animation.scale);
+    this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
     Entity.prototype.update.call(this);
 }
 
-zombie.prototype.draw = function () {
+Zombie.prototype.detectCollision = function (theOther) {
+    //If the other object is a square then let the square handle collision.
+    // if (theOther.shape === "square") {
+    //     theOther.detectCollision(this);
+    // } else {
+        var dist = distance(this, theOther);
+        var collisionRange = this.radius;
+        if (dist < collisionRange) {
+            this.x -= this.speed * .009 * (theOther.x - this.x);
+            this.y -= this.speed * .009 * (theOther.y - this.y);
+        }
+    //}
+}
+
+Zombie.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
+    var offscreenCanvas = document.createElement('canvas');
+    var size = Math.max(that.animation.frameWidth, that.animation.frameHeight);
+    offscreenCanvas.width = size;
+    offscreenCanvas.height = size;
+    var offscreenCtx = offscreenCanvas.getContext('2d');
+    offscreenCtx.save();
+    offscreenCtx.translate(size / 2, size / 2);
+    offscreenCtx.rotate(angle*Math.PI/180);
+    offscreenCtx.translate(0, 0);
+    offscreenCtx.drawImage(that.animation.spriteSheet, sx, sy, sw, sh, -(that.animation.frameWidth / 2),
+        -(that.animation.frameHeight / 2), that.animation.frameWidth, that.animation.frameHeight);
+    offscreenCtx.restore();
+    //offscreenCtx.strokeStyle = "red";
+    //offscreenCtx.strokeRect(0,0,size,size);
+    return offscreenCanvas;
+}
+
+Zombie.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     Entity.prototype.draw.call(this);
 }
@@ -235,9 +310,13 @@ AM.downloadAll(function () {
     gameEngine.start();
 
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
-    gameEngine.addEntity(new Survivor(gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png")));
-    gameEngine.addEntity(new zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
+    var player = new Survivor(gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
+    gameEngine.addEntity(player);
+    gameEngine.player = player;
 
-    
+    for (var i = 0; i < 5; i++) {
+        gameEngine.addEntity(new Zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
+    }
+
     console.log("All Done!");
 });

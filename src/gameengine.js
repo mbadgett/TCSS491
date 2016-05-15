@@ -58,6 +58,11 @@ GameEngine.prototype.update = function () {
 
         entity.update();
     }
+    for (var i = 0; i < entitiesCount; i++) {
+        if (this.player !== this.entities[i]) {
+            this.player.detectCollision(this.entities[i]);
+        }
+    }
 }
 
 GameEngine.prototype.loop = function () {
@@ -89,12 +94,11 @@ function Entity(game, x, y) {
     this.removeFromWorld = false;
 }
 
-Entity.prototype.detectCollision = function (theOther) {}
-
+Entity.prototype.detectCollision = function () {}
 
 Entity.prototype.update = function () {
-    for (Entity in this.game.entities) {
-        this.detectCollision();
+    for (var i = 1; i < this.game.entities.length; i++) {
+        this.detectCollision(this.game.entities[i]);
     }
 }
 
