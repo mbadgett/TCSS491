@@ -100,6 +100,8 @@ function Survivor(game, spritesheet) {
     this.mouseX = 0;
     this.mouseY = 0;
     var that = this;
+    this.x = 0;
+    this.y = 0;
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.code === "KeyD") {
@@ -138,8 +140,8 @@ function Survivor(game, spritesheet) {
         }
         }, false);
     this.ctx.canvas.addEventListener("mousemove", function (e) {
-        that.mouseX = e.x - 8;
-        that.mouseY = e.y - 8;
+        that.mouseX = e.x - 800 + that.x - 8;
+        that.mouseY = e.y - 450 + that.y - 8;
     },false);
     Entity.call(this, game, 0, 250);
 }

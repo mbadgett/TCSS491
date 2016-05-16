@@ -42,8 +42,12 @@ GameEngine.prototype.addEntity = function (entity) {
 }
 
 GameEngine.prototype.draw = function () {
+
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
+    if (this.player !== null) {
+        this.ctx.translate(-this.player.x + (this.surfaceWidth / 2), -this.player.y + (this.surfaceHeight / 2));
+    }
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
     }
