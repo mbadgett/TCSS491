@@ -51,7 +51,8 @@ GameEngine.prototype.draw = function () {
     }
     this.maze.draw(this.ctx);
     for (var i = 0; i < this.entities.length; i++) {
-        this.entities[i].draw(this.ctx);
+        var entity = this.entities[i];
+        if (distance(entity, this.player) < 1000) entity.draw(this.ctx);
     }
     this.ctx.restore();
 }
@@ -60,8 +61,7 @@ GameEngine.prototype.update = function () {
     var entitiesCount = this.entities.length;
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
-
-        entity.update();
+        if (distance(entity, this.player) < 1000) entity.update();
     }
     for (var i = 0; i < entitiesCount; i++) {
         if (this.player !== this.entities[i]) {

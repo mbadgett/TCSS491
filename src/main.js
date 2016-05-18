@@ -89,7 +89,7 @@ function Survivor(game, spritesheet) {
     this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4,this);
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
-    this.speed = 300;
+    this.speed = 500;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
     this.w = false;
@@ -151,20 +151,22 @@ Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
 
 Survivor.prototype.shoot = function (target) {
-    var relativeX = this.x + (this.animation.frameWidth/2) * this.animation.scale;
-    var relativeY = this.y + (this.animation.frameHeight/2) * this.animation.scale;
-    var targetVX = target.x - relativeX;
-    var targetVY = target.y - relativeY;
-    var shotVX = this.mouseX - relativeX;
-    var shotVY = this.mouseY - relativeY;
-    var vectorAngle = angleFromVectors(targetVX, targetVY, shotVX, shotVY);
-    var playerToTargetDist = distance({x : relativeX, y : relativeY}, {x : targetVX, y : targetVY});
-    var targetToLineDist = playerToTargetDist * Math.sin(vectorAngle);
 
-    if (targetToLineDist <= target.radius) {
-        return true;
-    }
-    else return false;
+
+    // var relativeX = this.x + (this.animation.frameWidth/2) * this.animation.scale;
+    // var relativeY = this.y + (this.animation.frameHeight/2) * this.animation.scale;
+    // var targetVX = target.x - relativeX;
+    // var targetVY = target.y - relativeY;
+    // var shotVX = this.mouseX - relativeX;
+    // var shotVY = this.mouseY - relativeY;
+    // var vectorAngle = angleFromVectors(targetVX, targetVY, shotVX, shotVY);
+    // var playerToTargetDist = distance({x : relativeX, y : relativeY}, {x : targetVX, y : targetVY});
+    // var targetToLineDist = playerToTargetDist * Math.sin(vectorAngle);
+    //
+    // if (targetToLineDist <= target.radius) {
+    //     return true;
+    // }
+    // else return false;
 
 }
 Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
@@ -299,7 +301,7 @@ Survivor.prototype.draw = function () {
     var px = (this.x + ((this.animation.frameWidth/2) * this.animation.scale));
     var py = (this.y + ((this.animation.frameHeight/2) * this.animation.scale));
     var dx = px - 1600 / 2;
-    var dy = py - 800 / 2;
+    var dy = py - 900 / 2;
     var lx = dx + this.mouseX;
     var ly = dy + this.mouseY;
     this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
@@ -308,15 +310,19 @@ Survivor.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 }
 
+function Shot(game, vX, vY) {
+    
+}
+
 function Zombie(game, spritesheet){
     this.animation = new Animation(spritesheet, 288, 314, 5, 0.11, 15, true, 0.4,this);
-    this.speed = .5 + Math.random() * 2;
+    this.speed = .5 + Math.random() * 5;
     this.radius = 157 * this.animation.scale;
     this.shape = "circle";
     this.player = game.player;
     this.ctx = game.ctx;
     this.myAngle = 0;
-    Entity.call(this, game, Math.floor(Math.random() * 800), Math.floor(Math.random() * 600));
+    Entity.call(this, game, Math.floor(Math.random() * game.maze.grid.length) * 400 + 200, Math.floor(Math.random() * game.maze.grid[0].length) * 400 + 200);
 }
 
 Zombie.prototype = new Entity();
@@ -329,12 +335,69 @@ Zombie.prototype.update = function() {
         this.y += this.speed * (this.player.y - this.y) /
             (distance(this, this.player));
     }
+    this.checkWalls();
     var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) -
         (this.player.x + (this.player.animation.frameWidth / 2) * this.player.animation.scale);
     var y = (this.y + ((this.animation.frameHeight/2) * this.animation.scale)) -
         (this.player.y + (this.player.animation.frameHeight / 2) * this.player.animation.scale);
     this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
     Entity.prototype.update.call(this);
+}
+
+Zombie.prototype.checkWalls = function () {
+    var i = Math.floor((this.x + 50) / 400);
+    var j = Math.floor((this.y + 50) / 400);
+    var currentCell = this.game.maze.grid[i][j];
+
+    /*
+     First we are checking the gaps between our main cells that we draw.
+     we must update the mouse xy relative to the player.
+     */
+    if ((this.x + this.animation.frameWidth * this.animation.scale / 2 > 400 * i + 300) &&
+        (this.y + this.animation.frameHeight * this.animation.scale / 4 > 400 * j + 262.5)) {
+        var difY = this.y + this.animation.frameHeight * this.animation.scale / 4 - (400 * j + 262.5);
+        this.y -= difY;
+    }
+
+    if ((this.x + this.animation.frameWidth * this.animation.scale / 2 > 400 * i + 300) &&
+        (this.y + this.animation.frameHeight * this.animation.scale / 4 < 400 * j)) {
+        var difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 4);
+        this.y += difY;
+    }
+
+    if ((this.y + this.animation.frameHeight * this.animation.scale / 2 > 400 * j + 300) &&
+        (this.x + this.animation.frameWidth * this.animation.scale / 4 > 400 * i + 237.5)) {
+        var difX = this.x + this.animation.frameWidth * this.animation.scale / 4 - (400 * i + 237.5);
+        this.x -= difX;
+    }
+
+    if ((this.y + this.animation.frameHeight * this.animation.scale / 2 > 400 * j + 300) &&
+        (this.x + this.animation.frameWidth * this.animation.scale / 4 < 400 * i)) {
+        var difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 4);
+        this.x += difX;
+    }
+
+
+    /*
+     Now we check collision in the main cell walls.
+     we must also update the mouse xy.
+     */
+    if (!currentCell.east && this.x + this.animation.frameWidth / 2 > 400 * i + 350) {
+        var difX = this.x + this.animation.frameWidth / 2 - (400 * i + 350);
+        this.x -= difX;
+    }
+    if (!currentCell.south && this.y + this.animation.frameHeight / 2 > 400 * j + 387.5) {
+        var difY = this.y + this.animation.frameHeight / 2 - (400 * j + 387.5);
+        this.y -= difY;
+    }
+    if (!currentCell.west && this.x + this.animation.frameWidth * this.animation.scale / 4 < 400 * i) {
+        var difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 4);
+        this.x += difX;
+    }
+    if (!currentCell.north && this.y + this.animation.frameHeight * this.animation.scale / 4 < 400 * j) {
+        var difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 4);
+        this.y += difY;
+    }
 }
 
 Zombie.prototype.detectCollision = function (theOther) {
@@ -397,8 +460,8 @@ AM.downloadAll(function () {
     gameEngine.addEntity(player);
     gameEngine.player = player;
 
-    for (var i = 0; i < 1; i++) {
-        //gameEngine.addEntity(new Zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
+    for (var i = 0; i < 10; i++) {
+        gameEngine.addEntity(new Zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
     }
 
     console.log("All Done!");
