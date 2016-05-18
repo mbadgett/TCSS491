@@ -89,7 +89,7 @@ function Survivor(game, spritesheet) {
     this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4,this);
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
-    this.speed = 150;
+    this.speed = 300;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
     this.w = false;
@@ -138,12 +138,13 @@ function Survivor(game, spritesheet) {
             that.s = false;
             that.animation = that.animation3;
         }
+        
         }, false);
     this.ctx.canvas.addEventListener("mousemove", function (e) {
         that.mouseX = e.x - 800 + that.x - 8;
         that.mouseY = e.y - 450 + that.y - 8;
     },false);
-    Entity.call(this, game, 0, 250);
+    Entity.call(this, game, 200, 200);
 }
 
 Survivor.prototype = new Entity();
@@ -204,21 +205,53 @@ Survivor.prototype.detectCollision = function (theOther) {
 Survivor.prototype.update = function () {
     if (this.d === true) {
         this.x += this.speed * this.game.clockTick;
+        this.mouseX += this.speed * this.game.clockTick;
     }
     if (this.s === true) {
         this.y += this.speed * this.game.clockTick;
+        this.mouseY += this.speed * this.game.clockTick;
     }
     if (this.a === true) {
         this.x -= this.speed * this.game.clockTick;
+        this.mouseX -= this.speed * this.game.clockTick;
     }
     if (this.w === true) {
         this.y -= this.speed * this.game.clockTick;
+        this.mouseY -= this.speed * this.game.clockTick;
     }
+    
+    this.checkWalls();
     //Update my angle
     var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) - this.mouseX;
     var y = (this.y + ((this.animation.frameHeight/2) * this.animation.scale)) - this.mouseY;
     this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
     Entity.prototype.update.call(this);
+}
+
+Survivor.prototype.checkWalls = function () {
+    var i = Math.floor((this.x + 50) / 400);
+    var j = Math.floor((this.y + 50) / 400);
+    var currentCell = this.game.maze.grid[i][j];
+    if (!currentCell.east && this.x + this.animation.frameWidth / 2 > 400 * i + 350) {
+        var difX = this.x + this.animation.frameWidth / 2 - (400 * i + 350);
+        this.x -= difX;
+        this.mouseX -= difX;
+    }
+    if (!currentCell.south && this.y + this.animation.frameHeight / 2 > 400 * j + 350) {
+        var difY = this.y + this.animation.frameHeight / 2 - (400 * j + 350);
+        this.y -= difY;
+        this.mouseY -= difY;
+    }
+    if (!currentCell.west && this.x + this.animation.frameWidth * this.animation.scale / 4 < 400 * i) {
+        var difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 4);
+        this.x += difX;
+        this.mouseX += difX;
+    }
+    if (!currentCell.north && this.y + this.animation.frameHeight * this.animation.scale / 4 < 400 * j) {
+        var difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 4);
+        this.y += difY;
+        this.mouseY += difY;
+    }
 }
 
 Survivor.prototype.draw = function () {
@@ -308,16 +341,17 @@ AM.downloadAll(function () {
     var ctx = canvas.getContext("2d");
 
     var gameEngine = new GameEngine();
+    gameEngine.initMaze(20);
     gameEngine.init(ctx);
     gameEngine.start();
 
-    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
+    //gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
     var player = new Survivor(gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
     gameEngine.addEntity(player);
     gameEngine.player = player;
 
-    for (var i = 0; i < 5; i++) {
-        gameEngine.addEntity(new Zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
+    for (var i = 0; i < 1; i++) {
+        //gameEngine.addEntity(new Zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
     }
 
     console.log("All Done!");

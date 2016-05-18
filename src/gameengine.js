@@ -13,6 +13,7 @@ function GameEngine() {
     this.entities = [];
     this.zombies = [];
     this.player = null;
+    this.maze = null;
     this.staticEntities = [];
     this.ctx = null;
     this.surfaceWidth = null;
@@ -48,6 +49,7 @@ GameEngine.prototype.draw = function () {
     if (this.player !== null) {
         this.ctx.translate(-this.player.x + (this.surfaceWidth / 2), -this.player.y + (this.surfaceHeight / 2));
     }
+    this.maze.draw(this.ctx);
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
     }
@@ -56,7 +58,6 @@ GameEngine.prototype.draw = function () {
 
 GameEngine.prototype.update = function () {
     var entitiesCount = this.entities.length;
-
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
 
@@ -73,6 +74,10 @@ GameEngine.prototype.loop = function () {
     this.clockTick = this.timer.tick();
     this.update();
     this.draw();
+}
+
+GameEngine.prototype.initMaze = function (size) {
+    this.maze = new Maze(size);
 }
 
 function Timer() {
