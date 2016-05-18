@@ -11,6 +11,10 @@ window.requestAnimFrame = (function () {
 
 function GameEngine() {
     this.entities = [];
+    this.zombies = [];
+    this.player = null;
+    this.maze = null;
+    this.staticEntities = [];
     this.ctx = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
@@ -39,8 +43,13 @@ GameEngine.prototype.addEntity = function (entity) {
 }
 
 GameEngine.prototype.draw = function () {
+
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
+    if (this.player !== null) {
+        this.ctx.translate(-this.player.x + (this.surfaceWidth / 2), -this.player.y + (this.surfaceHeight / 2));
+    }
+    this.maze.draw(this.ctx);
     for (var i = 0; i < this.entities.length; i++) {
         this.entities[i].draw(this.ctx);
     }
@@ -49,11 +58,15 @@ GameEngine.prototype.draw = function () {
 
 GameEngine.prototype.update = function () {
     var entitiesCount = this.entities.length;
-
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
 
         entity.update();
+    }
+    for (var i = 0; i < entitiesCount; i++) {
+        if (this.player !== this.entities[i]) {
+            this.player.detectCollision(this.entities[i]);
+        }
     }
 }
 
@@ -61,6 +74,10 @@ GameEngine.prototype.loop = function () {
     this.clockTick = this.timer.tick();
     this.update();
     this.draw();
+}
+
+GameEngine.prototype.initMaze = function (size) {
+    this.maze = new Maze(size);
 }
 
 function Timer() {
@@ -86,7 +103,12 @@ function Entity(game, x, y) {
     this.removeFromWorld = false;
 }
 
+Entity.prototype.detectCollision = function () {}
+
 Entity.prototype.update = function () {
+    for (var i = 1; i < this.game.entities.length; i++) {
+        this.detectCollision(this.game.entities[i]);
+    }
 }
 
 Entity.prototype.draw = function (ctx) {
