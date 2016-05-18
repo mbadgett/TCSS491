@@ -258,14 +258,20 @@ Survivor.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     this.game.ctx.beginPath();
     this.game.ctx.moveTo(this.x + ((this.animation.frameWidth/2) * this.animation.scale), this.y + ((this.animation.frameHeight/2) * this.animation.scale));
-    this.game.ctx.lineTo(this.mouseX, this.mouseY);
+    var px = (this.x + ((this.animation.frameWidth/2) * this.animation.scale));
+    var py = (this.y + ((this.animation.frameHeight/2) * this.animation.scale));
+    var dx = px - 1600 / 2;
+    var dy = py - 800 / 2;
+    var lx = dx + this.mouseX;
+    var ly = dy + this.mouseY;
+    this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
     this.game.ctx.stroke();
     Entity.prototype.draw.call(this);
 }
 
 function Zombie(game, spritesheet){
     this.animation = new Animation(spritesheet, 288, 314, 5, 0.11, 15, true, 0.4,this);
-    this.speed = 1 + Math.random() * 3;
+    this.speed = .5 + Math.random() * 2;
     this.radius = 157 * this.animation.scale;
     this.shape = "circle";
     this.player = game.player;
@@ -326,6 +332,8 @@ Zombie.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
 
 Zombie.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    this.ctx.rect(this.x, this.y, ((this.animation.frameWidth) * this.animation.scale), ((this.animation.frameHeight) * this.animation.scale));
+    this.ctx.stroke();
     Entity.prototype.draw.call(this);
 }
 
