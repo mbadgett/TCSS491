@@ -265,6 +265,7 @@ Survivor.prototype.draw = function () {
     var lx = dx + this.mouseX;
     var ly = dy + this.mouseY;
     this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
+    this.game.ctx.strokeStyle = "#FFFFFF";
     this.game.ctx.stroke();
     Entity.prototype.draw.call(this);
 }
