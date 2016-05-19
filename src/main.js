@@ -39,7 +39,7 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     var yindex = 0;
     xindex = frame % this.sheetWidth;
     yindex = Math.floor(frame / this.sheetWidth);
-    if (this.that !== null) {
+    if (this.that != null) {
         var canvas = this.that.rotateAndCache(this.that, xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
             this.frameWidth, this.frameHeight, this.that.myAngle);
 
@@ -120,6 +120,13 @@ function Survivor(game, spritesheet) {
             that.s = true;
             that.animation = that.animation2;
         }
+        if (e.code === "KeyF") {
+            var theBullet = new Bullet(that.game);
+            theBullet.x = that.x;
+            theBullet.y = that.y;
+            console.log("Bullet Added: " + theBullet.x + ", " + theBullet.y);
+            that.game.addEntity(theBullet);
+        }
          }, false);
     this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.code === "KeyD") {
@@ -138,7 +145,6 @@ function Survivor(game, spritesheet) {
             that.s = false;
             that.animation = that.animation3;
         }
-        
         }, false);
     this.ctx.canvas.addEventListener("mousemove", function (e) {
         that.mouseX = e.x - 800 + that.x - 8;
@@ -445,6 +451,7 @@ AM.queueDownload("./src/img/survivor_handgun_idle_sprite.png");
 AM.queueDownload("./src/img/survivor_feet_walking_sprite.png");
 AM.queueDownload("./src/img/survivor_idle.png");
 AM.queueDownload("./src/img/zombie_sprite.png");
+AM.queueDownload("./src/img/bullet.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
