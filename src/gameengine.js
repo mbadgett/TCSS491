@@ -16,6 +16,9 @@ function GameEngine() {
     this.maze = null;
     this.staticEntities = [];
     this.ctx = null;
+    this.click = null;
+    this.mouse = null;
+    this.wheel = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
 }
@@ -60,13 +63,18 @@ GameEngine.prototype.draw = function () {
 
 GameEngine.prototype.update = function () {
     var entitiesCount = this.entities.length;
+
     for (var i = 0; i < entitiesCount; i++) {
         var entity = this.entities[i];
-        if (distance(entity, this.player) < 1000) entity.update();
+
+        if (!entity.removeFromWorld) {
+            entity.update();
+        }
     }
-    for (var i = 0; i < entitiesCount; i++) {
-        if (this.player !== this.entities[i]) {
-            this.player.detectCollision(this.entities[i]);
+
+    for (var i = this.entities.length - 1; i >= 0; --i) {
+        if (this.entities[i].removeFromWorld) {
+            this.entities.splice(i, 1);
         }
     }
 }
@@ -75,6 +83,8 @@ GameEngine.prototype.loop = function () {
     this.clockTick = this.timer.tick();
     this.update();
     this.draw();
+    this.click = null;
+    this.wheel = null;
 }
 
 GameEngine.prototype.initMaze = function (size) {
@@ -113,10 +123,10 @@ Entity.prototype.update = function () {
 }
 
 Entity.prototype.draw = function (ctx) {
-    if (this.game.showOutlines && this.radius) {
+    if (this.game.showOutlines && this.radius && !this.removeFromWorld) {
         this.game.ctx.beginPath();
         this.game.ctx.strokeStyle = "green";
-        this.game.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        this.game.ctx.arc(this.x + (this.animation.frameWidth * this.animation.scale / 2), this.y + (this.animation.frameHeight * this.animation.scale / 2), this.radius, 0, Math.PI * 2, false);
         this.game.ctx.stroke();
         this.game.ctx.closePath();
     }

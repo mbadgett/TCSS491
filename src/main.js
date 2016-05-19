@@ -1,9 +1,23 @@
 var AM = new AssetManager();
 
 function distance(a, b) {
-    var dx = a.x - b.x;
-    var dy = a.y - b.y;
-    return Math.sqrt(dx * dx + dy * dy);
+    if (b != null) {
+        var dx = (a.x + a.animation.frameWidth * a.animation.scale / 2) - (b.x + b.animation.frameWidth * b.animation.scale / 2);
+        var dy = (a.y + a.animation.frameHeight * a.animation.scale / 2) - (b.y + b.animation.frameHeight * b.animation.scale / 2);
+        return Math.sqrt(dx * dx + dy * dy);
+    } else {
+        return 100000;
+    }
+}
+
+function mouseDist(a, b) {
+    if (b != null) {
+        var dx = (a.x + a.animation.frameWidth * a.animation.scale / 2) - (b.x);
+        var dy = (a.y + a.animation.frameHeight * a.animation.scale / 2) - (b.y);
+        return Math.sqrt(dx * dx + dy * dy);
+    } else {
+        return 100000;
+    }
 }
 
 function angleFromVectors(aX, aY, bX, bY) {
@@ -121,11 +135,7 @@ function Survivor(game, spritesheet) {
             that.animation = that.animation2;
         }
         if (e.code === "KeyF") {
-            var theBullet = new Bullet(that.game);
-            theBullet.x = that.x;
-            theBullet.y = that.y;
-            console.log("Bullet Added: " + theBullet.x + ", " + theBullet.y);
-            that.game.addEntity(theBullet);
+            that.shoot();
         }
          }, false);
     this.ctx.canvas.addEventListener("keyup", function (e) {
@@ -150,30 +160,27 @@ function Survivor(game, spritesheet) {
         that.mouseX = e.x - 800 + that.x - 8;
         that.mouseY = e.y - 450 + that.y - 8;
     },false);
+    this.ctx.canvas.addEventListener("click", function (e) {
+        that.shoot();
+    })
     Entity.call(this, game, 200, 200);
 }
 
 Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
 
-Survivor.prototype.shoot = function (target) {
+Survivor.prototype.shoot = function () {
+    var theBullet = new Bullet(this.game);
+    var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
+    var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
+    theBullet.x = realX;
+    theBullet.y = realY;
 
-
-    // var relativeX = this.x + (this.animation.frameWidth/2) * this.animation.scale;
-    // var relativeY = this.y + (this.animation.frameHeight/2) * this.animation.scale;
-    // var targetVX = target.x - relativeX;
-    // var targetVY = target.y - relativeY;
-    // var shotVX = this.mouseX - relativeX;
-    // var shotVY = this.mouseY - relativeY;
-    // var vectorAngle = angleFromVectors(targetVX, targetVY, shotVX, shotVY);
-    // var playerToTargetDist = distance({x : relativeX, y : relativeY}, {x : targetVX, y : targetVY});
-    // var targetToLineDist = playerToTargetDist * Math.sin(vectorAngle);
-    //
-    // if (targetToLineDist <= target.radius) {
-    //     return true;
-    // }
-    // else return false;
-
+    console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
+        + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+    theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+    theBullet.velocity.x *= (parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+    this.game.addEntity(theBullet);
 }
 Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     var offscreenCanvas = document.createElement('canvas');
@@ -199,13 +206,9 @@ Survivor.prototype.detectCollision = function (theOther) {
     //     theOther.detectCollision(this);
     // } else {
         var dist = distance(this, theOther);
-        var collisionRange = this.radius;
-
+        var collisionRange = this.radius + theOther.radius;
         if (dist < collisionRange) {
-            theOther.x += .03 * (theOther.x - this.x);
-            theOther.y += .03 * (theOther.y - this.y);
-            this.x -= .05 * (theOther.x - this.x);
-            this.y -= .05 * (theOther.y - this.y);
+
         }
     //}
 }
@@ -304,12 +307,6 @@ Survivor.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     this.game.ctx.beginPath();
     this.game.ctx.moveTo(this.x + ((this.animation.frameWidth/2) * this.animation.scale), this.y + ((this.animation.frameHeight/2) * this.animation.scale));
-    var px = (this.x + ((this.animation.frameWidth/2) * this.animation.scale));
-    var py = (this.y + ((this.animation.frameHeight/2) * this.animation.scale));
-    var dx = px - 1600 / 2;
-    var dy = py - 900 / 2;
-    var lx = dx + this.mouseX;
-    var ly = dy + this.mouseY;
     this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
     this.game.ctx.strokeStyle = "#FFFFFF";
     this.game.ctx.stroke();
@@ -416,6 +413,10 @@ Zombie.prototype.detectCollision = function (theOther) {
         if (dist < collisionRange) {
             this.x -= this.speed * .009 * (theOther.x - this.x);
             this.y -= this.speed * .009 * (theOther.y - this.y);
+            if( theOther instanceof Bullet ) {
+                this.removeFromWorld = true;
+                theOther.removeFromWorld = true;
+            }
         }
     //}
 }
@@ -441,6 +442,7 @@ Zombie.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
 Zombie.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     this.ctx.rect(this.x, this.y, ((this.animation.frameWidth) * this.animation.scale), ((this.animation.frameHeight) * this.animation.scale));
+    this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     this.ctx.stroke();
     Entity.prototype.draw.call(this);
 }
@@ -452,6 +454,7 @@ AM.queueDownload("./src/img/survivor_feet_walking_sprite.png");
 AM.queueDownload("./src/img/survivor_idle.png");
 AM.queueDownload("./src/img/zombie_sprite.png");
 AM.queueDownload("./src/img/bullet.png");
+AM.queueDownload("./src/img/Glenos-G_160_bullet.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -461,6 +464,8 @@ AM.downloadAll(function () {
     gameEngine.initMaze(10);
     gameEngine.init(ctx);
     gameEngine.start();
+
+    gameEngine.showOutlines = true;
 
     //gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
     var player = new Survivor(gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
