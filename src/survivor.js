@@ -14,8 +14,6 @@ function Survivor(game, spritesheet) {
     this.mouseX = 0;
     this.mouseY = 0;
     var that = this;
-    this.x = 0;
-    this.y = 0;
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.code === "KeyD") {

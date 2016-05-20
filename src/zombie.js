@@ -8,7 +8,7 @@ function Zombie(game, spritesheet){
     this.myAngle = 0;
     Entity.call(this, game, Math.floor(Math.random() * game.maze.grid.length) * 400 + 200, Math.floor(Math.random() * game.maze.grid[0].length) * 400 + 200);
 }
-
+// comment
 Zombie.prototype = new Entity();
 Zombie.prototype.constructor = Zombie;
 
@@ -45,6 +45,7 @@ Zombie.prototype.checkWalls = function () {
         this.y -= difY;
     }
 
+
     if ((this.x + this.animation.frameWidth * this.animation.scale / 2 > 400 * i + 300) &&
         (this.y + this.animation.frameHeight * this.animation.scale / 4 < 400 * j)) {
         difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 4);
@@ -61,6 +62,7 @@ Zombie.prototype.checkWalls = function () {
         (this.x + this.animation.frameWidth * this.animation.scale / 4 < 400 * i)) {
         difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 4);
         this.x += difX;
+
     }
 
 
