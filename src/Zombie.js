@@ -1,11 +1,14 @@
 function Zombie(game, spritesheet){
-    this.animation = new Animation(spritesheet, 288, 314, 5, 0.11, 15, true, 0.4, this);
+    this.animation = new Animation(spritesheet, 288, 310, 5, 0.11, 15, true, 0.4, this);
+    this.animation2 = new Animation(AM.getAsset("./src/img/zombie_attack_sprite.png"), 288, 310, 3, .08, 9, true, 0.4, this);
+    this.animation3 = this.animation;
+    this.attacking = false;
     this.speed = 3 + Math.random() * 4;
     this.radius = 157 * this.animation.scale;
-    this.shape = "circle";
     this.player = game.player;
     this.ctx = game.ctx;
     this.myAngle = 0;
+    this.attacked = false;
     Entity.call(this, game, Math.floor(Math.random() * game.maze.grid.length) * 400 + 200, Math.floor(Math.random() * game.maze.grid[0].length) * 400 + 200);
 }
 // comment
@@ -13,11 +16,24 @@ Zombie.prototype = new Entity();
 Zombie.prototype.constructor = Zombie;
 
 Zombie.prototype.update = function() {
-    if (distance(this, this.player) > this.radius) {
+    var distToPlayer = distance(this, this.player);
+    if (distToPlayer > this.radius * this.animation.scale) {
         this.x += this.speed * (this.player.x - this.x) /
             (distance(this, this.player));
         this.y += this.speed * (this.player.y - this.y) /
             (distance(this, this.player));
+    }
+    if (!this.attacking) {
+        var attackRange = this.radius * this.animation.scale * 5;
+        if (distToPlayer < attackRange) {
+            this.animation = this.animation2;
+            this.attacking = true;
+        }
+    } else {
+        if (distToPlayer > attackRange && this.animation.currentFrame() === 9) {
+            this.animation = this.animation3;
+            this.attacking = false;
+        }
     }
     this.checkWalls();
     var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) -
@@ -94,7 +110,28 @@ Zombie.prototype.detectCollision = function (theOther) {
     var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
     var diff = collisionRange - dist;
     if (dist < collisionRange) {
-        if (theOther instanceof Bullet) {
+        
+        //Check if we need to attack the player
+        if (theOther instanceof Survivor) {
+            // Check if we are withing range to be on the atttacking animation.
+            if (this.attacking) {
+                //check that we are on the frame where the attack lands
+                if (this.animation.currentFrame() === 6) {
+                    //check if we have dealt damage yet in this frametime.
+                    if (!this.attacked) {
+                        //deal damage and set flag so we dont attack multipletimes for a single animation frame.
+                        theOther.takeDamage();
+                        this.attacked = true;
+                    }
+                } else {
+                    // else we have moved beyond the attack frame so we can reset the flag for determining whether we
+                    // attacked during this animation loop.
+                    this.attacked = false;
+                }
+                
+            }
+        }
+        else if (theOther instanceof Bullet) {
             this.removeFromWorld = true;
             theOther.removeFromWorld = true;
         } else {

@@ -4,6 +4,7 @@ function Survivor(game, spritesheet) {
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
     this.speed = 500;
+    this.health = 1000;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
     this.w = false;
@@ -81,6 +82,10 @@ Survivor.prototype.shoot = function () {
     this.game.addEntity(theBullet);
 };
 
+Survivor.prototype.takeDamage = function () {
+    this.health -= 400;
+};
+
 Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     var offscreenCanvas = document.createElement('canvas');
     var size = Math.max(that.animation.frameWidth, that.animation.frameHeight);
@@ -131,6 +136,13 @@ Survivor.prototype.detectCollision = function (theOther) {
 };
 
 Survivor.prototype.update = function () {
+    if (this.health < 1) {
+        this.removeFromWorld = true;
+    }
+    /*
+     * .25 health per frame= ~15 Health per second which is 150 health every 10 seconds or 900 health per minute.
+     */
+    if (this.health < 1000) this.health += 0.25;
     if (this.d === true) {
         this.x += this.speed * this.game.clockTick;
         this.mouseX += this.speed * this.game.clockTick;
