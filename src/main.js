@@ -214,12 +214,12 @@ Survivor.prototype.detectCollision = function (theOther) {
                     theOther.y -= diff /2;
                 }
             } else if (this.y < theOther.y) {
-                this.x += diff /2
+                this.x += diff /2;
                 theOther.x -= diff /2;
                 this.y -= diff / 2;
                 theOther.y += diff / 2;
             } else {
-                this.x += diff /2
+                this.x += diff /2;
                 theOther.x -= diff /2;
                 this.y += diff /2;
                 theOther.y -= diff /2;

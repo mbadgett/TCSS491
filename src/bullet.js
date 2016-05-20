@@ -39,9 +39,11 @@ Bullet.prototype.checkWalls = function () {
          First we are checking the gaps between our main cells that we draw.
          we must update the mouse xy relative to the player.
          */
+        var difX = 0;
+        var difY = 0;
         if ((this.x + this.animation.frameWidth * this.animation.scale / 2 > 400 * i + 300) &&
             (this.y + this.animation.frameHeight * this.animation.scale / 4 > 400 * j + 300)) {
-            var difY = this.y + this.animation.frameHeight * this.animation.scale / 4 - (400 * j + 300);
+            difY = this.y + this.animation.frameHeight * this.animation.scale / 4 - (400 * j + 300);
             this.y -= difY;
             this.mouseY -= difY;
             hitWall = true;
@@ -49,7 +51,7 @@ Bullet.prototype.checkWalls = function () {
 
         if ((this.x + this.animation.frameWidth * this.animation.scale / 2 > 400 * i + 300) &&
             (this.y + this.animation.frameHeight * this.animation.scale / 2 < 400 * j)) {
-            var difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 2);
+            difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 2);
             this.y += difY;
             this.mouseY += difY;
             hitWall = true;
@@ -57,7 +59,7 @@ Bullet.prototype.checkWalls = function () {
 
         if ((this.y + this.animation.frameHeight * this.animation.scale / 2 > 400 * j + 300) &&
             (this.x + this.animation.frameWidth * this.animation.scale / 4 > 400 * i + 300)) {
-            var difX = this.x + this.animation.frameWidth * this.animation.scale / 4 - (400 * i + 300);
+            difX = this.x + this.animation.frameWidth * this.animation.scale / 4 - (400 * i + 300);
             this.x -= difX;
             this.mouseX -= difX;
             hitWall = true;
@@ -65,7 +67,7 @@ Bullet.prototype.checkWalls = function () {
 
         if ((this.y + this.animation.frameHeight * this.animation.scale / 2 > 400 * j + 300) &&
             (this.x + this.animation.frameWidth * this.animation.scale / 2 < 400 * i)) {
-            var difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 2);
+            difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 2);
             this.x += difX;
             this.mouseX += difX;
             hitWall = true;
@@ -77,25 +79,25 @@ Bullet.prototype.checkWalls = function () {
          we must also update the mouse xy.
          */
         if (!currentCell.east && this.x + this.animation.frameWidth / 2 > 400 * i + 350) {
-            var difX = this.x + this.animation.frameWidth / 2 - (400 * i + 350);
+            difX = this.x + this.animation.frameWidth / 2 - (400 * i + 350);
             this.x -= difX;
             this.mouseX -= difX;
             hitWall = true;
         }
         if (!currentCell.south && this.y + this.animation.frameHeight / 2 > 400 * j + 350) {
-            var difY = this.y + this.animation.frameHeight / 2 - (400 * j + 350);
+            difY = this.y + this.animation.frameHeight / 2 - (400 * j + 350);
             this.y -= difY;
             this.mouseY -= difY;
             hitWall = true;
         }
         if (!currentCell.west && this.x + this.animation.frameWidth * this.animation.scale / 4 < 400 * i) {
-            var difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 4);
+            difX = (400 * i) - (this.x + this.animation.frameWidth * this.animation.scale / 4);
             this.x += difX;
             this.mouseX += difX;
             hitWall = true;
         }
         if (!currentCell.north && this.y + this.animation.frameHeight * this.animation.scale / 4 < 400 * j) {
-            var difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 4);
+            difY = (400 * j) - (this.y + this.animation.frameHeight * this.animation.scale / 4);
             this.y += difY;
             this.mouseY += difY;
             hitWall = true;
@@ -104,19 +106,10 @@ Bullet.prototype.checkWalls = function () {
         return true;
     }
     return hitWall;
-}
+};
 
 Bullet.prototype.detectCollision = function (theOther) {
-    //If the other object is a square then let the square handle collision.
-    // if (theOther.shape === "square") {
-    //     theOther.detectCollision(this);
-    // } else {
-    var dist = distance(this, theOther);
-    var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
-    if (dist < collisionRange) {
-        
-    }
-}
+};
 
 Bullet.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     var offscreenCanvas = document.createElement('canvas');
@@ -134,7 +127,7 @@ Bullet.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
     //offscreenCtx.strokeStyle = "red";
     //offscreenCtx.strokeRect(0,0,size,size);
     return offscreenCanvas;
-}
+};
 
 Bullet.prototype.draw = function () {
     this.ctx.strokeStyle = "#00FFFF";
@@ -143,4 +136,4 @@ Bullet.prototype.draw = function () {
     this.ctx.stroke();
     this.ctx.closePath();
     Entity.prototype.draw.call(this);
-}
+};

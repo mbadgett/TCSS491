@@ -6,8 +6,6 @@ function Maze(gridSize) {
     for (var i = 0; i < gridSize; i++) {
         this.grid[i] = new Array(gridSize);
     }
-    this.entrance;
-    this.exit;
     this.stack = [];
 
     for (var i = 0; i < this.grid.length; i++) {
@@ -30,6 +28,7 @@ function Maze(gridSize) {
     this.startMaze();
     this.entrance = this.grid[0][0];
     this.exit = this.grid[this.grid.length - 1][this.grid[0].length - 1];
+    
 }
 
 
