@@ -2,12 +2,13 @@
  * Created by Admin on 5/16/2016.
  */
 function Maze(gridSize) {
+    this.squareFloor = AM.getAsset("./src/img/3x3.png");
+    this.horiFloor = AM.getAsset("./src/img/1x3.png");
+    this.vertFloor = AM.getAsset("./src/img/3x1.png");
     this.grid = new Array(gridSize);
     for (var i = 0; i < gridSize; i++) {
         this.grid[i] = new Array(gridSize);
     }
-    this.entrance;
-    this.exit;
     this.stack = [];
 
     for (var i = 0; i < this.grid.length; i++) {
@@ -30,6 +31,17 @@ function Maze(gridSize) {
     this.startMaze();
     this.entrance = this.grid[0][0];
     this.exit = this.grid[this.grid.length - 1][this.grid[0].length - 1];
+    for (var i = 0; i < gridSize / 2; i++) {
+        var cell = this.grid[Math.floor(1 + Math.random() * (this.grid.length - 2))][1 + Math.floor(Math.random() * (this.grid[0].length - 2))];
+        cell.north = true;
+        cell.up.south = true;
+        cell.east = true;
+        cell.right.west = true;
+        cell.south = true;
+        cell.down.north = true;
+        cell.west = true;
+        cell.left.east = true;
+    }
 }
 
 
@@ -38,7 +50,7 @@ Maze.prototype.startMaze = function () {
     this.stack.push(m);
     m.visited = true;
     this.buildMaze(m.getRand());
-}
+};
 
 Maze.prototype.buildMaze = function(cell) {
     this.stack.push(cell);
@@ -49,16 +61,16 @@ Maze.prototype.buildMaze = function(cell) {
         this.buildMaze(n);
         n = cell.getRand();
     }
-}
+};
 
 Maze.prototype.draw = function(ctx) {
     for (var i = 0; i < this.grid.length; i++) {
         for (var j = 0; j < this.grid[0].length; j++) {
             var cell = this.grid[i][j];
             ctx.fillStyle = "black";
-            ctx.fillRect(i * 400, j * 400, 300, 300);
-            if (cell.east) ctx.fillRect(i * 400 + 300, j * 400, 100, 300);
-            if (cell.south) ctx.fillRect(i * 400, j * 400 + 300, 300, 100);
+            ctx.drawImage(this.squareFloor, i * 400, j * 400);
+            if (cell.east) ctx.drawImage(this.horiFloor, i * 400 + 300, j * 400);
+            if (cell.south) ctx.drawImage(this.vertFloor, i * 400, j * 400 + 300);
         }
     }
 }
@@ -111,4 +123,4 @@ MazeCell.prototype.getRand = function() {
         }
     }
     return rtn;
-}
+};
