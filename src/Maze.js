@@ -11,18 +11,18 @@ function Maze(gridSize) {
     }
     this.stack = [];
 
-    for (var i = 0; i < this.grid.length; i++) {
+    for (i = 0; i < this.grid.length; i++) {
         for (var j = 0; j < this.grid[0].length; j++) {
             this.grid[i][j] = new MazeCell(null, null, null, null);
         }
     }
-    for (var i = 0; i < this.grid.length - 1; i++) {
+    for (i = 0; i < this.grid.length - 1; i++) {
         for (var j = 0; j < this.grid[0].length; j++) {
             this.grid[i][j].right = this.grid[i + 1][j];
             this.grid[i + 1][j].left = this.grid[i][j];
         }
     }
-    for (var i = 0; i < this.grid.length; i++) {
+    for (i = 0; i < this.grid.length; i++) {
         for (var j = 0; j < this.grid[0].length - 1; j++) {
             this.grid[i][j].down = this.grid[i][j + 1];
             this.grid[i][j + 1].up = this.grid[i][j];
@@ -31,7 +31,7 @@ function Maze(gridSize) {
     this.startMaze();
     this.entrance = this.grid[0][0];
     this.exit = this.grid[this.grid.length - 1][this.grid[0].length - 1];
-    for (var i = 0; i < gridSize / 2; i++) {
+    for (i = 0; i < gridSize / 2; i++) {
         var cell = this.grid[Math.floor(1 + Math.random() * (this.grid.length - 2))][1 + Math.floor(Math.random() * (this.grid[0].length - 2))];
         cell.north = true;
         cell.up.south = true;
@@ -67,13 +67,12 @@ Maze.prototype.draw = function(ctx) {
     for (var i = 0; i < this.grid.length; i++) {
         for (var j = 0; j < this.grid[0].length; j++) {
             var cell = this.grid[i][j];
-            ctx.fillStyle = "black";
             ctx.drawImage(this.squareFloor, i * 400, j * 400);
             if (cell.east) ctx.drawImage(this.horiFloor, i * 400 + 300, j * 400);
             if (cell.south) ctx.drawImage(this.vertFloor, i * 400, j * 400 + 300);
         }
     }
-}
+};
 
 function MazeCell(u, r, d, l) {
     this.up = u;
