@@ -3,7 +3,8 @@ function Zombie(game, spritesheet){
     this.animation2 = new Animation(AM.getAsset("./src/img/zombie_attack_sprite.png"), 288, 310, 3, .08, 9, true, 0.4, this);
     this.animation3 = this.animation;
     this.attacking = false;
-    this.speed = 3 + Math.random() * 4;
+    this.health = 1000;
+    this.speed = 3 + Math.random() * 3;
     this.radius = 157 * this.animation.scale;
     this.player = game.player;
     this.ctx = game.ctx;
@@ -23,8 +24,8 @@ Zombie.prototype.update = function() {
         this.y += this.speed * (this.player.y - this.y) /
             (distance(this, this.player));
     }
+    var attackRange = this.radius * this.animation.scale * 5;
     if (!this.attacking) {
-        var attackRange = this.radius * this.animation.scale * 5;
         if (distToPlayer < attackRange) {
             this.animation = this.animation2;
             this.attacking = true;
@@ -132,7 +133,7 @@ Zombie.prototype.detectCollision = function (theOther) {
             }
         }
         else if (theOther instanceof Bullet) {
-            this.removeFromWorld = true;
+            this.takeDamage(theOther.damage());
             theOther.removeFromWorld = true;
         } else {
             if (this.x < theOther.x) {
@@ -157,6 +158,15 @@ Zombie.prototype.detectCollision = function (theOther) {
                 theOther.y -= diff / 2;
             }
         }
+    }
+};
+
+Zombie.prototype.takeDamage = function (damage) {
+    this.health -= damage;
+    if (this.health <= 0) {
+        this.removeFromWorld = true;
+        var spawn = new Zombie(this.game, this.animation3.spriteSheet);
+        this.game.addEntity(spawn);
     }
 };
 

@@ -3,7 +3,7 @@ function Survivor(game, spritesheet) {
     this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4,this);
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
-    this.speed = 500;
+    this.speed = 350;
     this.health = 1000;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
@@ -69,12 +69,9 @@ Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
 
 Survivor.prototype.shoot = function () {
-    var theBullet = new Bullet(this.game);
     var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
     var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
-    theBullet.x = realX;
-    theBullet.y = realY;
-
+    var theBullet = new Bullet(this.game, realX, realY);
     console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
         + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
     theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
