@@ -166,7 +166,7 @@ Zombie.prototype.takeDamage = function (damage) {
     if (this.health <= 0) {
         this.removeFromWorld = true;
         var spawn = new Zombie(this.game, this.animation3.spriteSheet);
-        this.game.addEntity(spawn);
+        if (distance(spawn, this) > 1000) this.game.addEntity(spawn);
     }
 };
 
