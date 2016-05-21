@@ -102,6 +102,10 @@ AM.queueDownload("./src/img/3x3.png");
 AM.queueDownload("./src/img/3x1.png");
 AM.queueDownload("./src/img/1x3.png");
 AM.queueDownload("./src/img/zombie_attack_sprite.png");
+AM.queueDownload("./src/img/pickups/ammo.png");
+AM.queueDownload("./src/img/pickups/health.png");
+AM.queueDownload("./src/img/pickups/radpills.png");
+AM.queueDownload("./src/img/pickups/water.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
@@ -119,6 +123,10 @@ AM.downloadAll(function () {
     for (var i = 0; i < 50; i++) {
         gameEngine.addEntity(new Zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
     }
+    for (var i = 0; i < 20; i++) {
+        gameEngine.addEntity(new Pickup(gameEngine));
+    }
+
     gameEngine.start();
     console.log("All Done!");
 });

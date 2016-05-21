@@ -116,15 +116,15 @@ Entity.prototype.update = function () {
 };
 
 Entity.prototype.draw = function (ctx) {
-    // if (this.game.showOutlines && this.radius && !this.removeFromWorld) {
-    //     this.game.ctx.beginPath();
-    //     this.game.ctx.strokeStyle = "green";
-    //     this.game.ctx.arc(this.x + (this.animation.frameWidth * this.animation.scale / 2), 
-    //         this.y + (this.animation.frameHeight * this.animation.scale / 2),
-    //         this.radius * this.animation.scale, 0, Math.PI * 2, false);
-    //     this.game.ctx.stroke();
-    //     this.game.ctx.closePath();
-    // }
+    if (this.game.showOutlines && this.radius) {
+        this.game.ctx.beginPath();
+        this.game.ctx.strokeStyle = "green";
+        this.game.ctx.arc(this.x + (this.animation.frameWidth * this.animation.scale / 2),
+            this.y + (this.animation.frameHeight * this.animation.scale / 2),
+            this.radius * this.animation.scale, 0, Math.PI * 2, false);
+        this.game.ctx.stroke();
+        this.game.ctx.closePath();
+    }
 };
 
 Entity.prototype.rotateAndCache = function (image, angle) {

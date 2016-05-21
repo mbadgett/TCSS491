@@ -66,6 +66,16 @@ function Survivor(game, spritesheet) {
     this.ctx.canvas.addEventListener("click", function () {
         that.shoot();
     });
+
+    this.sfx = {};
+    this.sfx.ninemm = [];
+
+    this.sfx.ninemm[0] = new Audio('./src/aud/9mm.mp3');
+    this.sfx.ninemm[1] = new Audio('./src/aud/9mm.mp3');
+    this.sfx.ninemm[2] = new Audio('./src/aud/9mm.mp3');
+    this.sfx.ninemm[3] = 0;
+    this.sfx.noammo = new Audio('./src/aud/empty.mp3');
+
     Entity.call(this, game, 200, 200);
 }
 
@@ -73,14 +83,27 @@ Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
 
 Survivor.prototype.shoot = function () {
-    var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
-    var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
-    var theBullet = new Bullet(this.game, realX, realY);
-    console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
-        + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
-    theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
-    theBullet.velocity.x *= (parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
-    this.game.addEntity(theBullet);
+    if (this.ammo <= 0) {
+        this.sfx.noammo.pause();
+        this.sfx.noammo.currentTime = 0;
+        this.sfx.noammo.play();
+    } else {
+        var sound = this.sfx.ninemm[this.sfx.ninemm[3]];
+        sound.pause();
+        sound.currentTime = 0;
+        sound.play();
+        this.sfx.ninemm[3] = (this.sfx.ninemm[3] + 1) % 3;
+        
+        this.ammo -= 1;
+        var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
+        var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
+        var theBullet = new Bullet(this.game, realX, realY);
+        console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
+            + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+        theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+        theBullet.velocity.x *= (parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+        this.game.addEntity(theBullet);
+    }
 };
 
 Survivor.prototype.takeDamage = function () {
@@ -111,10 +134,6 @@ Survivor.prototype.detectCollision = function (theOther) {
         var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
         var diff = collisionRange - dist;
         if (dist < collisionRange) {
-            if (theOther instanceof Pickup) {
-                theOther.applyEffect();
-                theOther.removeFromWorld = true;
-            } else {
                 if (this.x < theOther.x) {
                     this.x -= diff / 2;
                     theOther.x += diff / 2;
@@ -136,7 +155,6 @@ Survivor.prototype.detectCollision = function (theOther) {
                     this.y += diff / 2;
                     theOther.y -= diff / 2;
                 }
-            }
         }
     }
 };

@@ -5,7 +5,7 @@ function Pickup(game){
     this.types = ["health", "ammo", "water", "radpills"];
     this.typeOf = Math.floor(Math.random() * 3);
     this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 1, 9999, 1, true, 1, null);
-    this.radius = 157 * this.animation.scale;
+    this.radius = 32 * this.animation.scale;
     this.player = game.player;
     this.ctx = game.ctx;
     this.myAngle = 0;
@@ -21,7 +21,15 @@ Pickup.prototype.update = function() {
 };
 
 Pickup.prototype.detectCollision = function (theOther) {
-    
+    var dist = distance(this, theOther);
+    if (dist > 1000) return;
+    var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
+    if (dist < collisionRange) {
+        if (theOther instanceof Survivor) {
+            this.applyEffect();
+            this.removeFromWorld = true;
+        }
+    }
 };
 
 Pickup.prototype.applyEffect = function () {
