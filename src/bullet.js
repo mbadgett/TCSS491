@@ -31,7 +31,7 @@ Bullet.prototype.damage = function () {
     var dx = this.x - this.originX;
     var dy = this.y - this.originY;
     var dist = Math.sqrt(dx * dx + dy * dy);
-    return 300 - 15 * Math.floor(dist / 100);
+    return 300 - 20 * Math.floor(dist / 100);
 };
 
 Bullet.prototype.checkWalls = function () {
