@@ -1,18 +1,17 @@
 /**
  * Created by Asic on 5/18/2016.
  */
-function Bullet(game){
+function Bullet(game, x, y){
     this.animation = new Animation(AM.getAsset("./src/img/Glenos-G_160_bullet.png"), 16, 16, 1, 9999, 1, false, 1.0 , null)
     this.speed = 1;
     this.radius = 5 * this.animation.scale;
-    this.shape = "circle";
     this.player = game.player;
     this.ctx = game.ctx;
     this.myAngle = 0;
     this.velocity = {x: 31, y: 31};
-    this.x = 0;
-    this.y = 0;
-    Entity.call(this, game, 0, 0);
+    this.originX = x;
+    this.originY = y;
+    Entity.call(this, game, x, y);
 }
 
 Bullet.prototype = new Entity();
@@ -26,7 +25,14 @@ Bullet.prototype.update = function() {
     this.x += this.velocity.x;
     this.y += this.velocity.y;
     Entity.prototype.update.call(this);
-}
+};
+
+Bullet.prototype.damage = function () {
+    var dx = this.x - this.originX;
+    var dy = this.y - this.originY;
+    var dist = Math.sqrt(dx * dx + dy * dy);
+    return 300 - 20 * Math.floor(dist / 100);
+};
 
 Bullet.prototype.checkWalls = function () {
     var i = Math.floor((this.x + 50) / 400);

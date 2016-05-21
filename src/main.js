@@ -101,6 +101,7 @@ AM.queueDownload("./src/img/Glenos-G_160_bullet.png");
 AM.queueDownload("./src/img/3x3.png");
 AM.queueDownload("./src/img/3x1.png");
 AM.queueDownload("./src/img/1x3.png");
+AM.queueDownload("./src/img/zombie_attack_sprite.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");

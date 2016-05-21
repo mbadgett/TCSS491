@@ -3,7 +3,8 @@ function Survivor(game, spritesheet) {
     this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4,this);
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
-    this.speed = 500;
+    this.speed = 350;
+    this.health = 1000;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
     this.w = false;
@@ -68,17 +69,18 @@ Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
 
 Survivor.prototype.shoot = function () {
-    var theBullet = new Bullet(this.game);
     var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
     var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
-    theBullet.x = realX;
-    theBullet.y = realY;
-
+    var theBullet = new Bullet(this.game, realX, realY);
     console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
         + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
     theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
     theBullet.velocity.x *= (parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
     this.game.addEntity(theBullet);
+};
+
+Survivor.prototype.takeDamage = function () {
+    this.health -= 400;
 };
 
 Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
@@ -131,6 +133,13 @@ Survivor.prototype.detectCollision = function (theOther) {
 };
 
 Survivor.prototype.update = function () {
+    if (this.health < 1) {
+        this.removeFromWorld = true;
+    }
+    /*
+     * .25 health per frame= ~15 Health per second which is 150 health every 10 seconds or 900 health per minute.
+     */
+    if (this.health < 1000) this.health += 0.25;
     if (this.d === true) {
         this.x += this.speed * this.game.clockTick;
         this.mouseX += this.speed * this.game.clockTick;
