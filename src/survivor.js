@@ -16,6 +16,10 @@ function Survivor(game, spritesheet) {
     this.mouseY = 0;
     var that = this;
 
+    this.ammo = 21;
+    this.water = 100;
+    this.radiation = 0;
+
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.code === "KeyD") {
             that.d = true;
@@ -107,26 +111,31 @@ Survivor.prototype.detectCollision = function (theOther) {
         var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
         var diff = collisionRange - dist;
         if (dist < collisionRange) {
-            if (this.x < theOther.x) {
-                this.x -= diff / 2;
-                theOther.x += diff / 2;
-                if (this.y < theOther.y) {
+            if (theOther instanceof Pickup) {
+                theOther.applyEffect();
+                theOther.removeFromWorld = true;
+            } else {
+                if (this.x < theOther.x) {
+                    this.x -= diff / 2;
+                    theOther.x += diff / 2;
+                    if (this.y < theOther.y) {
+                        this.y -= diff / 2;
+                        theOther.y += diff / 2;
+                    } else {
+                        this.y += diff / 2;
+                        theOther.y -= diff / 2;
+                    }
+                } else if (this.y < theOther.y) {
+                    this.x += diff / 2;
+                    theOther.x -= diff / 2;
                     this.y -= diff / 2;
                     theOther.y += diff / 2;
                 } else {
-                    this.y += diff /2;
-                    theOther.y -= diff /2;
+                    this.x += diff / 2;
+                    theOther.x -= diff / 2;
+                    this.y += diff / 2;
+                    theOther.y -= diff / 2;
                 }
-            } else if (this.y < theOther.y) {
-                this.x += diff /2;
-                theOther.x -= diff /2;
-                this.y -= diff / 2;
-                theOther.y += diff / 2;
-            } else {
-                this.x += diff /2;
-                theOther.x -= diff /2;
-                this.y += diff /2;
-                theOther.y -= diff /2;
             }
         }
     }
