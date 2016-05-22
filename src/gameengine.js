@@ -27,8 +27,8 @@ GameEngine.prototype.init = function (ctx) {
     console.log('game initialized');
 };
 
-GameEngine.prototype.start = function () {
-    console.log("starting game");
+GameEngine.prototype.start = function (name) {
+    console.log("starting " + name);
     var that = this;
     (function gameLoop() {
         that.loop();
@@ -45,14 +45,16 @@ GameEngine.prototype.draw = function () {
 
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
-    if (this.player !== null) {
+    if (this.player != null) {
         this.ctx.translate(-this.player.x + (this.surfaceWidth / 2), -this.player.y + (this.surfaceHeight / 2));
     }
-    this.maze.draw(this.ctx);
+    if (this.maze != null) {
+        this.maze.draw(this.ctx);
+    }
     for (var i = 0; i < this.entities.length; i++) {
         var entity = this.entities[i];
         if (distance(entity, this.player) < 1000)
-        entity.draw(this.ctx);
+            entity.draw(this.ctx);
     }
     this.ctx.restore();
 };
