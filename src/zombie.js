@@ -31,7 +31,7 @@ Zombie.prototype.update = function() {
             this.attacking = true;
         }
     } else {
-        if (distToPlayer > attackRange && this.animation.currentFrame() === 9) {
+        if (distToPlayer > attackRange) {
             this.animation = this.animation3;
             this.attacking = false;
         }
