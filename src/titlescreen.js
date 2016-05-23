@@ -41,7 +41,6 @@ TitleScreen.prototype.constructor = TitleScreen;
 TitleScreen.prototype.update = function() {
     this.x = 0;
     this.y = 0;
-    this.draw();
 };
 
 TitleScreen.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
