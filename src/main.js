@@ -111,6 +111,8 @@ AM.queueDownload("./src/img/HUD.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
 
     var gameEngine = new GameEngine();
     var titleScreen = new GameEngine();
