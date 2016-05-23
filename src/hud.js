@@ -43,6 +43,9 @@ HUD.prototype.draw = function () {
     this.ctx.fillRect(145, 42, 300 * (this.game.player.health / this.game.player.maxHealth), 25);
     this.ctx.fillStyle = "#0000FF";
     this.ctx.fillRect(145, 75, 300 * (this.game.player.water / this.game.player.maxWater), 25);
+    this.ctx.fillStyle = "#000000";
+    this.ctx.font="30px Verdana";
+    this.ctx.fillText(this.game.player.ammo, 180, 134);
     this.ctx.restore();
     Entity.prototype.draw.call(this);
 };

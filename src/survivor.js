@@ -188,7 +188,7 @@ Survivor.prototype.update = function () {
     }
 
     if (this.w || this.a || this.d || this.s) {
-        this.water -= .072;
+        this.water -= .062;
     }
 
     this.checkWalls();
