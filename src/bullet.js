@@ -2,7 +2,7 @@
  * Created by Asic on 5/18/2016.
  */
 function Bullet(game, x, y){
-    this.animation = new Animation(AM.getAsset("./src/img/Glenos-G_160_bullet.png"), 16, 16, 1, 9999, 1, false, 1.0 , null)
+    this.animation = new Animation(AM.getAsset("./src/img/Glenos-G_160_bullet.png"), 16, 16, 1, 9999, 1, false, 1.0 , null);
     this.speed = 1;
     this.radius = 5 * this.animation.scale;
     this.player = game.player;

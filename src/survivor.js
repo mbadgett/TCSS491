@@ -4,7 +4,6 @@ function Survivor(game, spritesheet) {
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
     this.speed = 350;
-    this.health = 1000;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
     this.w = false;
@@ -15,6 +14,14 @@ function Survivor(game, spritesheet) {
     this.mouseX = 0;
     this.mouseY = 0;
     var that = this;
+
+
+    this.health = 1000;
+    this.maxHealth = 1000;
+    this.ammo = 21;
+    this.water = 100;
+    this.maxWater = 100;
+    this.radiation = 0;
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (e.code === "KeyD") {
@@ -62,6 +69,16 @@ function Survivor(game, spritesheet) {
     this.ctx.canvas.addEventListener("click", function () {
         that.shoot();
     });
+
+    this.sfx = {};
+    this.sfx.ninemm = [];
+
+    this.sfx.ninemm[0] = new Audio('./src/aud/9mm.mp3');
+    this.sfx.ninemm[1] = new Audio('./src/aud/9mm.mp3');
+    this.sfx.ninemm[2] = new Audio('./src/aud/9mm.mp3');
+    this.sfx.ninemm[3] = 0;
+    this.sfx.noammo = new Audio('./src/aud/empty.mp3');
+
     Entity.call(this, game, 200, 200);
 }
 
@@ -69,14 +86,27 @@ Survivor.prototype = new Entity();
 Survivor.prototype.constructor = Survivor;
 
 Survivor.prototype.shoot = function () {
-    var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
-    var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
-    var theBullet = new Bullet(this.game, realX, realY);
-    console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
-        + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
-    theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
-    theBullet.velocity.x *= (parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
-    this.game.addEntity(theBullet);
+    if (this.ammo <= 0) {
+        this.sfx.noammo.pause();
+        this.sfx.noammo.currentTime = 0;
+        this.sfx.noammo.play();
+    } else {
+        var sound = this.sfx.ninemm[this.sfx.ninemm[3]];
+        sound.pause();
+        sound.currentTime = 0;
+        sound.play();
+        this.sfx.ninemm[3] = (this.sfx.ninemm[3] + 1) % 3;
+        
+        this.ammo -= 1;
+        var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
+        var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
+        var theBullet = new Bullet(this.game, realX, realY);
+        console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
+            + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+        theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+        theBullet.velocity.x *= (parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
+        this.game.addEntity(theBullet);
+    }
 };
 
 Survivor.prototype.takeDamage = function () {
@@ -107,27 +137,27 @@ Survivor.prototype.detectCollision = function (theOther) {
         var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
         var diff = collisionRange - dist;
         if (dist < collisionRange) {
-            if (this.x < theOther.x) {
-                this.x -= diff / 2;
-                theOther.x += diff / 2;
-                if (this.y < theOther.y) {
+                if (this.x < theOther.x) {
+                    this.x -= diff / 2;
+                    theOther.x += diff / 2;
+                    if (this.y < theOther.y) {
+                        this.y -= diff / 2;
+                        theOther.y += diff / 2;
+                    } else {
+                        this.y += diff / 2;
+                        theOther.y -= diff / 2;
+                    }
+                } else if (this.y < theOther.y) {
+                    this.x += diff / 2;
+                    theOther.x -= diff / 2;
                     this.y -= diff / 2;
                     theOther.y += diff / 2;
                 } else {
-                    this.y += diff /2;
-                    theOther.y -= diff /2;
+                    this.x += diff / 2;
+                    theOther.x -= diff / 2;
+                    this.y += diff / 2;
+                    theOther.y -= diff / 2;
                 }
-            } else if (this.y < theOther.y) {
-                this.x += diff /2;
-                theOther.x -= diff /2;
-                this.y -= diff / 2;
-                theOther.y += diff / 2;
-            } else {
-                this.x += diff /2;
-                theOther.x -= diff /2;
-                this.y += diff /2;
-                theOther.y -= diff /2;
-            }
         }
     }
 };
@@ -155,6 +185,10 @@ Survivor.prototype.update = function () {
     if (this.w === true) {
         this.y -= this.speed * this.game.clockTick;
         this.mouseY -= this.speed * this.game.clockTick;
+    }
+
+    if (this.w || this.a || this.d || this.s) {
+        this.water -= .058;
     }
 
     this.checkWalls();
@@ -252,11 +286,11 @@ Survivor.prototype.checkWalls = function () {
 
 Survivor.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-    this.game.ctx.beginPath();
-    this.game.ctx.moveTo(this.x + ((this.animation.frameWidth/2) * this.animation.scale), this.y + ((this.animation.frameHeight/2) * this.animation.scale));
-    this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
-    this.game.ctx.strokeStyle = "#FFFFFF";
-    this.game.ctx.stroke();
-    this.game.ctx.closePath()
+    //this.game.ctx.beginPath();
+    //this.game.ctx.moveTo(this.x + ((this.animation.frameWidth/2) * this.animation.scale), this.y + ((this.animation.frameHeight/2) * this.animation.scale));
+    //this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
+    //this.game.ctx.strokeStyle = "#FFFFFF";
+    //this.game.ctx.stroke();
+    //this.game.ctx.closePath()
     Entity.prototype.draw.call(this);
 };

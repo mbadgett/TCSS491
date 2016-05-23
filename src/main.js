@@ -102,23 +102,28 @@ AM.queueDownload("./src/img/3x3.png");
 AM.queueDownload("./src/img/3x1.png");
 AM.queueDownload("./src/img/1x3.png");
 AM.queueDownload("./src/img/zombie_attack_sprite.png");
+AM.queueDownload("./src/img/pickups/ammo.png");
+AM.queueDownload("./src/img/pickups/health.png");
+AM.queueDownload("./src/img/pickups/radpills.png");
+AM.queueDownload("./src/img/pickups/water.png");
+AM.queueDownload("./src/img/TitleScreen.jpg");
+AM.queueDownload("./src/img/HUD.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
 
     var gameEngine = new GameEngine();
-    gameEngine.init(ctx);
-    gameEngine.initMaze(20);
-    gameEngine.showOutlines = true;
+    var titleScreen = new GameEngine();
+    var gameOver = new GameEngine();
 
-    //gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
-    var player = new Survivor(gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
-    gameEngine.addEntity(player);
-    gameEngine.player = player;
+    titleScreen.init(ctx);
+    titleScreen.addEntity(new TitleScreen(titleScreen, gameEngine));
 
-    for (var i = 0; i < 50; i++) {
-        gameEngine.addEntity(new Zombie(gameEngine, AM.getAsset("./src/img/zombie_sprite.png")));
-    }
-    gameEngine.start();
+    titleScreen.gameEngine = gameEngine;
+    gameEngine.gameOver = gameOver;
+
+    titleScreen.start("titleScreen");
+
+    //gameEngine.start();
     console.log("All Done!");
 });

@@ -17,6 +17,7 @@ function GameEngine() {
     this.click = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
+    this.HUD = null;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -27,8 +28,8 @@ GameEngine.prototype.init = function (ctx) {
     console.log('game initialized');
 };
 
-GameEngine.prototype.start = function () {
-    console.log("starting game");
+GameEngine.prototype.start = function (name) {
+    console.log("starting " + name);
     var that = this;
     (function gameLoop() {
         that.loop();
@@ -45,14 +46,22 @@ GameEngine.prototype.draw = function () {
 
     this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
     this.ctx.save();
-    if (this.player !== null) {
+    if (this.player != null) {
         this.ctx.translate(-this.player.x + (this.surfaceWidth / 2), -this.player.y + (this.surfaceHeight / 2));
     }
-    this.maze.draw(this.ctx);
+    if (this.maze != null) {
+        this.maze.draw(this.ctx);
+    } else {
+        this.entities[0].draw(this.ctx);
+    }
     for (var i = 0; i < this.entities.length; i++) {
         var entity = this.entities[i];
         if (distance(entity, this.player) < 1000)
-        entity.draw(this.ctx);
+            entity.draw(this.ctx);
+    }
+
+    if (this.HUD != null) {
+        this.HUD.draw();
     }
     this.ctx.restore();
 };
@@ -116,15 +125,15 @@ Entity.prototype.update = function () {
 };
 
 Entity.prototype.draw = function (ctx) {
-    // if (this.game.showOutlines && this.radius && !this.removeFromWorld) {
-    //     this.game.ctx.beginPath();
-    //     this.game.ctx.strokeStyle = "green";
-    //     this.game.ctx.arc(this.x + (this.animation.frameWidth * this.animation.scale / 2), 
-    //         this.y + (this.animation.frameHeight * this.animation.scale / 2),
-    //         this.radius * this.animation.scale, 0, Math.PI * 2, false);
-    //     this.game.ctx.stroke();
-    //     this.game.ctx.closePath();
-    // }
+    if (this.game.showOutlines && this.radius) {
+        this.game.ctx.beginPath();
+        this.game.ctx.strokeStyle = "green";
+        this.game.ctx.arc(this.x + (this.animation.frameWidth * this.animation.scale / 2),
+            this.y + (this.animation.frameHeight * this.animation.scale / 2),
+            this.radius * this.animation.scale, 0, Math.PI * 2, false);
+        this.game.ctx.stroke();
+        this.game.ctx.closePath();
+    }
 };
 
 Entity.prototype.rotateAndCache = function (image, angle) {
