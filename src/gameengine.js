@@ -50,6 +50,8 @@ GameEngine.prototype.draw = function () {
     }
     if (this.maze != null) {
         this.maze.draw(this.ctx);
+    } else {
+        this.entities[0].draw(this.ctx);
     }
     for (var i = 0; i < this.entities.length; i++) {
         var entity = this.entities[i];
