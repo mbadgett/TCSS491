@@ -29,6 +29,8 @@ function TitleScreen(game, thegame){
             for (var i = 0; i < 20; i++) {
                 that.gameEngine.addEntity(new Pickup(that.gameEngine));
             }
+
+            that.gameEngine.HUD = new HUD(that.gameEngine);
             that.gameStarted = true;
             that.gameEngine.start("MainGame");
         }

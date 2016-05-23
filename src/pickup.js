@@ -37,8 +37,8 @@ Pickup.prototype.applyEffect = function () {
         case 0:
             //Health
             this.game.player.health += 455;
-            if (this.game.player.health > 1000) {
-                this.game.player.health = 1000;
+            if (this.game.player.health > this.game.player.maxHealth) {
+                this.game.player.health = this.game.player.maxHealth;
             }
             break;
         case 1:
@@ -48,8 +48,8 @@ Pickup.prototype.applyEffect = function () {
         case 2:
             //Water
             this.game.player.water += 35;
-            if (this.game.player.water > 100) {
-                this.game.player.water = 100;
+            if (this.game.player.water > this.game.player.maxWater) {
+                this.game.player.water = this.game.player.maxWater;
             }
             break;
         case 3:

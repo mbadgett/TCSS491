@@ -4,7 +4,6 @@ function Survivor(game, spritesheet) {
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
     this.speed = 350;
-    this.health = 1000;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
     this.w = false;
@@ -16,8 +15,12 @@ function Survivor(game, spritesheet) {
     this.mouseY = 0;
     var that = this;
 
+
+    this.health = 1000;
+    this.maxHealth = 1000;
     this.ammo = 21;
     this.water = 100;
+    this.maxWater = 100;
     this.radiation = 0;
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
@@ -182,6 +185,10 @@ Survivor.prototype.update = function () {
     if (this.w === true) {
         this.y -= this.speed * this.game.clockTick;
         this.mouseY -= this.speed * this.game.clockTick;
+    }
+
+    if (this.w || this.a || this.d || this.s) {
+        this.water -= .072;
     }
 
     this.checkWalls();

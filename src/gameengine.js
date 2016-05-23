@@ -17,6 +17,7 @@ function GameEngine() {
     this.click = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
+    this.HUD = null;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -57,6 +58,10 @@ GameEngine.prototype.draw = function () {
         var entity = this.entities[i];
         if (distance(entity, this.player) < 1000)
             entity.draw(this.ctx);
+    }
+
+    if (this.HUD != null) {
+        this.HUD.draw();
     }
     this.ctx.restore();
 };
