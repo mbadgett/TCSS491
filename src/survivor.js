@@ -188,7 +188,7 @@ Survivor.prototype.update = function () {
     }
 
     if (this.w || this.a || this.d || this.s) {
-        this.water -= .062;
+        this.water -= .058;
     }
 
     this.checkWalls();
@@ -286,11 +286,11 @@ Survivor.prototype.checkWalls = function () {
 
 Survivor.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
-    this.game.ctx.beginPath();
-    this.game.ctx.moveTo(this.x + ((this.animation.frameWidth/2) * this.animation.scale), this.y + ((this.animation.frameHeight/2) * this.animation.scale));
-    this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
-    this.game.ctx.strokeStyle = "#FFFFFF";
-    this.game.ctx.stroke();
-    this.game.ctx.closePath()
+    //this.game.ctx.beginPath();
+    //this.game.ctx.moveTo(this.x + ((this.animation.frameWidth/2) * this.animation.scale), this.y + ((this.animation.frameHeight/2) * this.animation.scale));
+    //this.game.ctx.lineTo( this.mouseX, this.mouseY) ;
+    //this.game.ctx.strokeStyle = "#FFFFFF";
+    //this.game.ctx.stroke();
+    //this.game.ctx.closePath()
     Entity.prototype.draw.call(this);
 };

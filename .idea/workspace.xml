@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="feafa229-318c-4c85-8c2d-52f9e99faf17" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hud.js" afterPath="$PROJECT_DIR$/src/hud.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/img/Thumbs.db" afterPath="$PROJECT_DIR$/src/img/Thumbs.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pickup.js" afterPath="$PROJECT_DIR$/src/pickup.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/survivor.js" afterPath="$PROJECT_DIR$/src/survivor.js" />
     </list>
     <ignored path="TCSS491-Project.iws" />
@@ -59,7 +61,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hud.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hud.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/hud.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="765">
@@ -124,11 +126,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="survivor.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="survivor.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/survivor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
-              <caret line="190" column="26" selection-start-line="190" selection-start-column="26" selection-end-line="190" selection-end-column="26" />
+            <state relative-caret-position="736">
+              <caret line="293" column="6" selection-start-line="293" selection-start-column="6" selection-end-line="293" selection-end-column="6" />
               <folding>
                 <element signature="e#776#1316#0" expanded="false" />
                 <element signature="e#809#893#0" expanded="false" />
@@ -170,7 +172,6 @@
                 <element signature="e#9822#9956#0" expanded="false" />
                 <element signature="e#10059#10211#0" expanded="false" />
                 <element signature="e#10316#10469#0" expanded="false" />
-                <element signature="e#10512#10973#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -179,8 +180,8 @@
       <file leaf-file-name="pickup.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pickup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
+            <state relative-caret-position="153">
+              <caret line="45" column="64" selection-start-line="45" selection-start-column="64" selection-end-line="45" selection-end-column="64" />
               <folding>
                 <element signature="n#!!doc;n#Pickup#0" expanded="false" />
               </folding>
@@ -224,9 +225,9 @@
         <option value="$PROJECT_DIR$/src/main.js" />
         <option value="$PROJECT_DIR$/src/gameengine.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/hud.js" />
         <option value="$PROJECT_DIR$/src/pickup.js" />
         <option value="$PROJECT_DIR$/src/survivor.js" />
-        <option value="$PROJECT_DIR$/src/hud.js" />
       </list>
     </option>
   </component>
@@ -438,7 +439,7 @@
       <workItem from="1463772980316" duration="3550000" />
       <workItem from="1463806111907" duration="4674000" />
       <workItem from="1463853326660" duration="4595000" />
-      <workItem from="1463954522674" duration="6182000" />
+      <workItem from="1463954522674" duration="7118000" />
     </task>
     <task id="LOCAL-00001" summary="Added floor images to the repository not using them yet.">
       <created>1463727585486</created>
@@ -486,7 +487,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54388000" />
+    <option name="totallyTimeSpent" value="55324000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1069,16 +1070,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pickup.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
-          <folding>
-            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/titlescreen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1095,10 +1086,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/hud.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="35" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pickup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="45" column="64" selection-start-line="45" selection-start-column="64" selection-end-line="45" selection-end-column="64" />
+          <folding>
+            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/survivor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="190" column="26" selection-start-line="190" selection-start-column="26" selection-end-line="190" selection-end-column="26" />
+        <state relative-caret-position="736">
+          <caret line="293" column="6" selection-start-line="293" selection-start-column="6" selection-end-line="293" selection-end-column="6" />
           <folding>
             <element signature="e#776#1316#0" expanded="false" />
             <element signature="e#809#893#0" expanded="false" />
@@ -1140,16 +1149,7 @@
             <element signature="e#9822#9956#0" expanded="false" />
             <element signature="e#10059#10211#0" expanded="false" />
             <element signature="e#10316#10469#0" expanded="false" />
-            <element signature="e#10512#10973#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hud.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="35" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>

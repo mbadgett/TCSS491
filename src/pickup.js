@@ -43,11 +43,11 @@ Pickup.prototype.applyEffect = function () {
             break;
         case 1:
             //Ammo
-            this.game.player.ammo += Math.ceil(Math.random() * 8);
+            this.game.player.ammo += Math.ceil(Math.random() * 9) + 7;
             break;
         case 2:
             //Water
-            this.game.player.water += 35;
+            this.game.player.water += 55;
             if (this.game.player.water > this.game.player.maxWater) {
                 this.game.player.water = this.game.player.maxWater;
             }
