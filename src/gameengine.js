@@ -18,6 +18,9 @@ function GameEngine() {
     this.surfaceWidth = null;
     this.surfaceHeight = null;
     this.HUD = null;
+    this.over = false;
+    this.win = false;
+    this.gameOver = null;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -33,7 +36,7 @@ GameEngine.prototype.start = function (name) {
     var that = this;
     (function gameLoop() {
         that.loop();
-        requestAnimFrame(gameLoop, that.ctx.canvas);
+            requestAnimFrame(gameLoop, that.ctx.canvas);
     })();
 };
 
@@ -92,6 +95,10 @@ GameEngine.prototype.loop = function () {
 GameEngine.prototype.initMaze = function (size) {
     this.maze = new Maze(size);
 };
+
+GameEngine.prototype.reset = function(newGame) {
+    
+}
 
 function Timer() {
     this.gameTime = 0;
