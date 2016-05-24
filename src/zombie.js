@@ -109,6 +109,7 @@ Zombie.prototype.detectCollision = function (theOther) {
     var dist = distance(this, theOther);
     if (dist > 1000) return;
     var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
+    if (this.attacking && theOther instanceof Survivor) collisionRange *= 1.5;
     var diff = collisionRange - dist;
     if (dist < collisionRange) {
         
@@ -166,6 +167,12 @@ Zombie.prototype.takeDamage = function (damage) {
     if (this.health <= 0) {
         this.removeFromWorld = true;
         var spawn = new Zombie(this.game, this.animation3.spriteSheet);
+        if (Math.random() > .80) {
+            var pickup = new Pickup(this.game);
+            pickup.x = this.x;
+            pickup.y = this.y;
+            this.game.addEntity(pickup);
+        }
         if (distance(spawn, this) > 1000) this.game.addEntity(spawn);
     }
 };
@@ -193,5 +200,9 @@ Zombie.prototype.draw = function () {
     // this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     // this.ctx.stroke();
     // this.ctx.closePath();
+    if (this.health < 1000) {
+        this.ctx.fillStyle = "#FF0000"
+        this.ctx.fillRect(this.x, this.y, this.health / 10, 15);
+    }
     Entity.prototype.draw.call(this);
 };

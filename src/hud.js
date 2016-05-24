@@ -40,9 +40,9 @@ HUD.prototype.draw = function () {
     this.ctx.translate(this.game.player.x - (this.ctx.canvas.width / 2), this.game.player.y - (this.ctx.canvas.height / 2));
     this.animation.drawFrame(this.game.clockTick, this.ctx, 0, 0);
     this.ctx.fillStyle = "#FF0000";
-    this.ctx.fillRect(145, 42, 300 * (this.game.player.health / this.game.player.maxHealth), 25);
+    this.ctx.fillRect(145, 42, 300 * ((this.game.player.health > 0) ? (this.game.player.health / this.game.player.maxHealth) : 0), 25);
     this.ctx.fillStyle = "#0000FF";
-    this.ctx.fillRect(145, 75, 300 * (this.game.player.water / this.game.player.maxWater), 25);
+    this.ctx.fillRect(145, 75, 300 * ((this.game.player.water > 0) ? (this.game.player.water / this.game.player.maxWater) : 0), 25);
     this.ctx.fillStyle = "#000000";
     this.ctx.font="30px Verdana";
     this.ctx.fillText(this.game.player.ammo, 180, 134);

@@ -3,7 +3,7 @@ function Survivor(game, spritesheet) {
     this.animation = new Animation(spritesheet, 258, 220, 6, 0.1, 18, true, .4,this);
     this.animation2 = new Animation(AM.getAsset("./src/img/survivor_move_handgun_sprite.png"), 258, 220, 6, 0.1, 18, true, .4, this);
     this.animation3 = this.animation;
-    this.speed = 350;
+    this.speed = 200;
     this.myAngle = 0;
     this.radius = 129 * this.animation.scale;
     this.w = false;
@@ -13,12 +13,13 @@ function Survivor(game, spritesheet) {
     this.ctx = game.ctx;
     this.mouseX = 0;
     this.mouseY = 0;
+    this.sprinting = false;
     var that = this;
 
 
     this.health = 1000;
     this.maxHealth = 1000;
-    this.ammo = 21;
+    this.ammo = 60;
     this.water = 100;
     this.maxWater = 100;
     this.radiation = 0;
@@ -43,6 +44,10 @@ function Survivor(game, spritesheet) {
         if (e.code === "KeyF") {
             that.shoot();
         }
+        if (e.keyCode === 16 && that.water > 1) {
+            that.sprinting = true;
+            that.speed = 350;
+        }
     }, false);
     this.ctx.canvas.addEventListener("keyup", function (e) {
         if (e.code === "KeyD") {
@@ -60,6 +65,10 @@ function Survivor(game, spritesheet) {
         if (e.code === "KeyS") {
             that.s = false;
             that.animation = that.animation3;
+        }
+        if (e.keyCode === 16) {
+            that.sprinting = false;
+            that.speed = 200;
         }
     }, false);
     this.ctx.canvas.addEventListener("mousemove", function (e) {
@@ -187,8 +196,15 @@ Survivor.prototype.update = function () {
         this.mouseY -= this.speed * this.game.clockTick;
     }
 
-    if (this.w || this.a || this.d || this.s) {
+    if (this.sprinting && (this.w || this.a || this.d || this.s)) {
         this.water -= .058;
+        if (this.water < 1) {
+            this.sprinting = false;
+            this.speed = 200;
+        }
+    } else if (this.water < this.maxWater) {
+        this.water += .2;
+        if (this.water > this.maxWater) this.water = this.maxWater;
     }
 
     this.checkWalls();
