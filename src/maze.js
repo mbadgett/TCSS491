@@ -72,6 +72,13 @@ Maze.prototype.draw = function(ctx) {
             if (cell.south) ctx.drawImage(this.vertFloor, i * 400, j * 400 + 300);
         }
     }
+    ctx.save();
+    ctx.globalAlpha = .5;
+    ctx.fillStyle = "#00FF00";
+    ctx.fillRect((this.grid.length - 1)* 400, (this.grid.length - 1) * 400, 300, 300);
+    ctx.fillStyle = "#0000FF";
+    ctx.fillRect(0, 0, 300, 300);
+    ctx.restore();
 };
 
 function MazeCell(u, r, d, l) {

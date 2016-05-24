@@ -174,6 +174,7 @@ Survivor.prototype.detectCollision = function (theOther) {
 Survivor.prototype.update = function () {
     if (this.health < 1) {
         this.removeFromWorld = true;
+        this.over = true;
     }
     /*
      * .25 health per frame= ~15 Health per second which is 150 health every 10 seconds or 900 health per minute.
@@ -203,7 +204,7 @@ Survivor.prototype.update = function () {
             this.speed = 200;
         }
     } else if (this.water < this.maxWater) {
-        this.water += .2;
+        this.water += .1;
         if (this.water > this.maxWater) this.water = this.maxWater;
     }
 
@@ -238,7 +239,11 @@ Survivor.prototype.checkWalls = function () {
     var i = Math.floor((this.x + 50) / 400);
     var j = Math.floor((this.y + 50) / 400);
     var currentCell = this.game.maze.grid[i][j];
-
+    var bottomRight = this.game.maze.grid.length - 1;
+    if (currentCell === this.game.maze.grid[bottomRight][bottomRight]) {
+        this.game.over = true;
+        this.game.win = true;
+    }
     /*
      First we are checking the gaps between our main cells that we draw.
      we must update the mouse xy relative to the player.
