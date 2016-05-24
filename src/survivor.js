@@ -63,8 +63,8 @@ function Survivor(game, spritesheet) {
         }
     }, false);
     this.ctx.canvas.addEventListener("mousemove", function (e) {
-        that.mouseX = e.x - 800 + that.x - 8;
-        that.mouseY = e.y - 450 + that.y - 8;
+        that.mouseX = e.x - (that.ctx.canvas.width / 2) + that.x - 8;
+        that.mouseY = e.y - (that.ctx.canvas.height / 2) + that.y - 8;
     },false);
     this.ctx.canvas.addEventListener("click", function () {
         that.shoot();

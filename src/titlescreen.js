@@ -32,6 +32,10 @@ function TitleScreen(game, thegame){
 
             that.gameEngine.HUD = new HUD(that.gameEngine);
             that.gameStarted = true;
+            that.gameEngine.ctx.canvas.addEventListener("resize", function (e) {
+                this.width  = window.innerWidth;
+                this.height = window.innerHeight;
+            }, false);
             that.gameEngine.start("MainGame");
         }
     });
