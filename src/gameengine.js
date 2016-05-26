@@ -93,7 +93,7 @@ GameEngine.prototype.loop = function () {
 };
 
 GameEngine.prototype.initMaze = function (size) {
-    this.maze = new Maze(size);
+    this.maze = new Maze(size, this);
 };
 
 GameEngine.prototype.reset = function(newGame) {
