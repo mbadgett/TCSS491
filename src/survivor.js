@@ -173,8 +173,9 @@ Survivor.prototype.detectCollision = function (theOther) {
 
 Survivor.prototype.update = function () {
     if (this.health < 1) {
-        this.removeFromWorld = true;
-        this.over = true;
+        //this.removeFromWorld = true;
+        //this.over = true;
+        this.game.reset();
     }
     /*
      * .25 health per frame= ~15 Health per second which is 150 health every 10 seconds or 900 health per minute.

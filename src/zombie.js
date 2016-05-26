@@ -18,30 +18,32 @@ Zombie.prototype.constructor = Zombie;
 
 Zombie.prototype.update = function() {
     var distToPlayer = distance(this, this.player);
-    if (distToPlayer > this.radius * this.animation.scale) {
-        this.x += this.speed * (this.player.x - this.x) /
-            (distance(this, this.player));
-        this.y += this.speed * (this.player.y - this.y) /
-            (distance(this, this.player));
-    }
-    var attackRange = this.radius * this.animation.scale * 5;
-    if (!this.attacking) {
-        if (distToPlayer < attackRange) {
-            this.animation = this.animation2;
-            this.attacking = true;
+    if (distToPlayer < 1000) {
+        if (distToPlayer > this.radius * this.animation.scale) {
+            this.x += this.speed * (this.player.x - this.x) /
+                (distance(this, this.player));
+            this.y += this.speed * (this.player.y - this.y) /
+                (distance(this, this.player));
         }
-    } else {
-        if (distToPlayer > attackRange) {
-            this.animation = this.animation3;
-            this.attacking = false;
+        var attackRange = this.radius * this.animation.scale * 5;
+        if (!this.attacking) {
+            if (distToPlayer < attackRange) {
+                this.animation = this.animation2;
+                this.attacking = true;
+            }
+        } else {
+            if (distToPlayer > attackRange) {
+                this.animation = this.animation3;
+                this.attacking = false;
+            }
         }
+        this.checkWalls();
+        var x = (this.x + ((this.animation.frameWidth / 2) * this.animation.scale)) -
+            (this.player.x + (this.player.animation.frameWidth / 2) * this.player.animation.scale);
+        var y = (this.y + ((this.animation.frameHeight / 2) * this.animation.scale)) -
+            (this.player.y + (this.player.animation.frameHeight / 2) * this.player.animation.scale);
+        this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180 / Math.PI) + 180;
     }
-    this.checkWalls();
-    var x = (this.x +((this.animation.frameWidth/2) * this.animation.scale)) -
-        (this.player.x + (this.player.animation.frameWidth / 2) * this.player.animation.scale);
-    var y = (this.y + ((this.animation.frameHeight/2) * this.animation.scale)) -
-        (this.player.y + (this.player.animation.frameHeight / 2) * this.player.animation.scale);
-    this.myAngle = ((Math.atan2(y, x) - Math.atan2(0, 0)) * 180/ Math.PI) + 180;
     Entity.prototype.update.call(this);
 };
 

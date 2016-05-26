@@ -97,8 +97,24 @@ GameEngine.prototype.initMaze = function (size) {
 };
 
 GameEngine.prototype.reset = function(newGame) {
-    
-}
+    this.entities = [];
+    if (newGame) this.initMaze(20);
+    this.player.x = 200;
+    this.player.y = 200;
+    this.player.health = 1000;
+    this.player.ammo = 60;
+    this.player.water = 100;
+    this.entities.push(this.player);
+    for (var i = 0; i < 80; i++) {
+        var zombie = new Zombie(this, AM.getAsset("./src/img/zombie_sprite.png"))
+        if (distance(this.player, zombie) > 500) {
+            this.addEntity(zombie);
+        } else i--;
+    }
+    for (var i = 0; i < 20; i++) {
+        this.addEntity(new Pickup(this));
+    }
+};
 
 function Timer() {
     this.gameTime = 0;
