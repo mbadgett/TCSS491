@@ -68,7 +68,7 @@ Maze.prototype.draw = function(ctx) {
     var x = Math.floor(this.game.player.x / 400);
     var y = Math.floor(this.game.player.y / 400);
     for (var i = x-3; i < x+4; i++) {
-        for (var j = y-3; j < y+4; j++) {
+        for (var j = y-2; j < y+3; j++) {
             if ( i >= 0 && j >= 0 && i < this.grid.length && j < this.grid.length) {
                 var cell = this.grid[i][j];
                 ctx.drawImage(this.squareFloor, i * 400, j * 400);
