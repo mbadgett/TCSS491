@@ -12,13 +12,13 @@ function TitleScreen(game, thegame){
     var that = this;
     this.gameStarted = false;
 
-    this.ctx.canvas.addEventListener("click", function () {
+    var startGame = function () {
         if (that.gameStarted == false) {
             that.gameEngine.init(that.ctx);
             that.gameEngine.initMaze(20);
             that.gameEngine.showOutlines = false;
+            that.gameEngine.titleScreen = that;
 
-            //gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
             var player = new Survivor(that.gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
             that.gameEngine.addEntity(player);
             that.gameEngine.player = player;
@@ -34,14 +34,26 @@ function TitleScreen(game, thegame){
             }
 
             that.gameEngine.HUD = new HUD(that.gameEngine);
-            that.gameStarted = true;
             that.gameEngine.ctx.canvas.addEventListener("resize", function (e) {
-                this.width  = window.innerWidth;
-                this.height = window.innerHeight;
+                that.gameEngine.ctx.canvas.width  = window.innerWidth;
+                that.gameEngine.ctx.canvas.height = window.innerHeight;
             }, false);
+
+            that.gameStarted = true;
+
             that.gameEngine.start("MainGame");
+            that.ctx.canvas.removeEventListener("click", startGame());
         }
-    });
+    };
+
+    this.ctx.canvas.addEventListener("click", startGame);
+}
+
+TitleScreen.prototype.setGameOver = function() {
+    this.animation = new Animation(AM.getAsset("./src/img/GameOver.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
+    this.gameStarted = false;
+    var reset = this.gameEngine.reset(this);
+    var click = this.ctx.canvas.addEventListener("click", reset);
 }
 
 TitleScreen.prototype = new Entity();
@@ -71,6 +83,8 @@ TitleScreen.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
 };
 
 TitleScreen.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, 0, 0);
-    Entity.prototype.draw.call(this);
+    if (!this.gameStarted) {
+        this.animation.drawFrame(this.game.clockTick, this.ctx, 0, 0);
+        Entity.prototype.draw.call(this);
+    }
 };

@@ -107,6 +107,8 @@ AM.queueDownload("./src/img/pickups/health.png");
 AM.queueDownload("./src/img/pickups/radpills.png");
 AM.queueDownload("./src/img/pickups/water.png");
 AM.queueDownload("./src/img/TitleScreen.jpg");
+AM.queueDownload("./src/img/GameOver.jpg");
+AM.queueDownload("./src/img/GameWin.jpg");
 AM.queueDownload("./src/img/HUD.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -117,6 +119,8 @@ AM.downloadAll(function () {
     var gameEngine = new GameEngine();
     var titleScreen = new GameEngine();
     var gameOver = new GameEngine();
+
+    gameEngine.title = titleScreen;
 
     titleScreen.init(ctx);
     titleScreen.addEntity(new TitleScreen(titleScreen, gameEngine));
