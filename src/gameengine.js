@@ -102,7 +102,7 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
     if (!referenceEngine.gameStarted) {
         this.entities = [];
         if (isNewGame) {
-            this.initMaze(20);
+            this.initMaze(10);
             this.win = false;
         }
         this.player.x = 200;
@@ -111,13 +111,13 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
         this.player.ammo = 60;
         this.player.water = 100;
         this.entities.push(this.player);
-        for (var i = 0; i < 80; i++) {
+        for (var i = 0; i < 40; i++) {
             var zombie = new Zombie(this, AM.getAsset("./src/img/zombie_sprite.png"))
             if (distance(this.player, zombie) > 500) {
                 this.addEntity(zombie);
             } else i--;
         }
-        for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < 12; i++) {
             this.addEntity(new Pickup(this));
         }
         referenceEngine.gameStarted = true;
