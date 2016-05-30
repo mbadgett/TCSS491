@@ -18,9 +18,8 @@ function GameEngine() {
     this.surfaceWidth = null;
     this.surfaceHeight = null;
     this.HUD = null;
-    this.over = false;
+    this.running = false;
     this.win = false;
-    this.gameOver = null;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -33,6 +32,7 @@ GameEngine.prototype.init = function (ctx) {
 
 GameEngine.prototype.start = function (name) {
     console.log("starting " + name);
+    this.running = true;
     var that = this;
     (function gameLoop() {
         that.loop();
@@ -85,20 +85,45 @@ GameEngine.prototype.update = function () {
 };
 
 GameEngine.prototype.loop = function () {
-    this.clockTick = this.timer.tick();
-    this.update();
-    this.draw();
-    this.click = null;
-    this.wheel = null;
+    if (this.running) {
+        this.clockTick = this.timer.tick();
+        this.update();
+        this.draw();
+        this.click = null;
+        this.wheel = null;
+    }
 };
 
 GameEngine.prototype.initMaze = function (size) {
-    this.maze = new Maze(size);
+    this.maze = new Maze(size, this);
 };
 
-GameEngine.prototype.reset = function(newGame) {
-    
-}
+GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
+    if (!referenceEngine.gameStarted) {
+        this.entities = [];
+        if (isNewGame) {
+            this.initMaze(10);
+            this.win = false;
+        }
+        this.player.x = 200;
+        this.player.y = 200;
+        this.player.health = 1000;
+        this.player.ammo = 60;
+        this.player.water = 100;
+        this.entities.push(this.player);
+        for (var i = 0; i < 40; i++) {
+            var zombie = new Zombie(this, AM.getAsset("./src/img/zombie_sprite.png"))
+            if (distance(this.player, zombie) > 500) {
+                this.addEntity(zombie);
+            } else i--;
+        }
+        for (var i = 0; i < 12; i++) {
+            this.addEntity(new Pickup(this));
+        }
+        referenceEngine.gameStarted = true;
+        this.running = true;
+    }
+};
 
 function Timer() {
     this.gameTime = 0;

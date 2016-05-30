@@ -12,19 +12,18 @@ function TitleScreen(game, thegame){
     var that = this;
     this.gameStarted = false;
 
-    this.ctx.canvas.addEventListener("click", function () {
+    var startGame = function () {
         if (that.gameStarted == false) {
             that.gameEngine.init(that.ctx);
-            that.gameEngine.initMaze(20);
+            that.gameEngine.initMaze(10);
             that.gameEngine.showOutlines = false;
 
-            //gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./src/img/background.jpg")));
-            var player = new Survivor(that.gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
+            var player = new Survivor(thegame, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
             that.gameEngine.addEntity(player);
             that.gameEngine.player = player;
 
-            for (var i = 0; i < 50; i++) {
-                var zombie = new Zombie(that.gameEngine, AM.getAsset("./src/img/zombie_sprite.png"))
+            for (var i = 0; i < 20; i++) {
+                var zombie = new Zombie(that.gameEngine, AM.getAsset("./src/img/zombie_sprite.png"));
                 if (distance(player, zombie) > 500) {
                     that.gameEngine.addEntity(zombie);
                 } else i--;
@@ -34,18 +33,32 @@ function TitleScreen(game, thegame){
             }
 
             that.gameEngine.HUD = new HUD(that.gameEngine);
-            that.gameStarted = true;
             that.gameEngine.ctx.canvas.addEventListener("resize", function (e) {
-                this.width  = window.innerWidth;
-                this.height = window.innerHeight;
+                that.gameEngine.ctx.canvas.width  = window.innerWidth;
+                that.gameEngine.ctx.canvas.height = window.innerHeight;
             }, false);
+
+            that.gameStarted = true;
+
             that.gameEngine.start("MainGame");
+            that.ctx.canvas.removeEventListener("click", startGame);
         }
-    });
+    };
+    this.ctx.canvas.addEventListener("click", startGame);
 }
 
 TitleScreen.prototype = new Entity();
 TitleScreen.prototype.constructor = TitleScreen;
+
+TitleScreen.prototype.setGameOver = function() {
+    if (this.gameEngine.win) this.animation = new Animation(AM.getAsset("./src/img/GameWin.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
+    else this.animation = new Animation(AM.getAsset("./src/img/GameOver.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
+    this.gameStarted = false;
+    var that = this;
+    var click = this.ctx.canvas.addEventListener("click", function () {
+        that.gameEngine.reset(that, that.gameEngine.win);
+    });
+};
 
 TitleScreen.prototype.update = function() {
     this.x = 0;
@@ -71,6 +84,8 @@ TitleScreen.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
 };
 
 TitleScreen.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, 0, 0);
-    Entity.prototype.draw.call(this);
+    if (!this.gameStarted) {
+        this.animation.drawFrame(this.game.clockTick, this.ctx, 0, 0);
+        Entity.prototype.draw.call(this);
+    }
 };

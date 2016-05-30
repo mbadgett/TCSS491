@@ -1,7 +1,8 @@
 /**
  * Created by Admin on 5/16/2016.
  */
-function Maze(gridSize) {
+function Maze(gridSize, game) {
+    this.game = game;
     this.squareFloor = AM.getAsset("./src/img/3x3.png");
     this.horiFloor = AM.getAsset("./src/img/1x3.png");
     this.vertFloor = AM.getAsset("./src/img/3x1.png");
@@ -64,12 +65,16 @@ Maze.prototype.buildMaze = function(cell) {
 };
 
 Maze.prototype.draw = function(ctx) {
-    for (var i = 0; i < this.grid.length; i++) {
-        for (var j = 0; j < this.grid[0].length; j++) {
-            var cell = this.grid[i][j];
-            ctx.drawImage(this.squareFloor, i * 400, j * 400);
-            if (cell.east) ctx.drawImage(this.horiFloor, i * 400 + 300, j * 400);
-            if (cell.south) ctx.drawImage(this.vertFloor, i * 400, j * 400 + 300);
+    var x = Math.floor(this.game.player.x / 400);
+    var y = Math.floor(this.game.player.y / 400);
+    for (var i = x-3; i < x+4; i++) {
+        for (var j = y-2; j < y+3; j++) {
+            if ( i >= 0 && j >= 0 && i < this.grid.length && j < this.grid.length) {
+                var cell = this.grid[i][j];
+                ctx.drawImage(this.squareFloor, i * 400, j * 400);
+                if (cell.east) ctx.drawImage(this.horiFloor, i * 400 + 300, j * 400);
+                if (cell.south) ctx.drawImage(this.vertFloor, i * 400, j * 400 + 300);
+            }
         }
     }
     ctx.save();

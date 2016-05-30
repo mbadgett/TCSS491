@@ -119,7 +119,7 @@ Survivor.prototype.shoot = function () {
 };
 
 Survivor.prototype.takeDamage = function () {
-    this.health -= 400;
+    this.health -= 250;
 };
 
 Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
@@ -173,8 +173,11 @@ Survivor.prototype.detectCollision = function (theOther) {
 
 Survivor.prototype.update = function () {
     if (this.health < 1) {
-        this.removeFromWorld = true;
-        this.over = true;
+        //this.removeFromWorld = true;
+        //this.over = true;
+        //this.game.reset(this.game, false);
+        this.game.running = false;
+        this.game.titleScreen.setGameOver();
     }
     /*
      * .25 health per frame= ~15 Health per second which is 150 health every 10 seconds or 900 health per minute.
@@ -241,8 +244,9 @@ Survivor.prototype.checkWalls = function () {
     var currentCell = this.game.maze.grid[i][j];
     var bottomRight = this.game.maze.grid.length - 1;
     if (currentCell === this.game.maze.grid[bottomRight][bottomRight]) {
-        this.game.over = true;
         this.game.win = true;
+        this.game.running = false;
+        this.game.titleScreen.setGameOver();
     }
     /*
      First we are checking the gaps between our main cells that we draw.
