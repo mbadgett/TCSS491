@@ -22,7 +22,7 @@ function TitleScreen(game, thegame){
             that.gameEngine.addEntity(player);
             that.gameEngine.player = player;
 
-            for (var i = 0; i < 80; i++) {
+            for (var i = 0; i < 20; i++) {
                 var zombie = new Zombie(that.gameEngine, AM.getAsset("./src/img/zombie_sprite.png"));
                 if (distance(player, zombie) > 500) {
                     that.gameEngine.addEntity(zombie);
@@ -51,7 +51,8 @@ TitleScreen.prototype = new Entity();
 TitleScreen.prototype.constructor = TitleScreen;
 
 TitleScreen.prototype.setGameOver = function() {
-    this.animation = new Animation(AM.getAsset("./src/img/GameOver.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
+    if (this.gameEngine.win) this.animation = new Animation(AM.getAsset("./src/img/GameWin.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
+    else this.animation = new Animation(AM.getAsset("./src/img/GameOver.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
     this.gameStarted = false;
     var that = this;
     var click = this.ctx.canvas.addEventListener("click", function () {
