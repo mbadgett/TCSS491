@@ -15,16 +15,15 @@ function TitleScreen(game, thegame){
     var startGame = function () {
         if (that.gameStarted == false) {
             that.gameEngine.init(that.ctx);
-            that.gameEngine.initMaze(20);
+            that.gameEngine.initMaze(10);
             that.gameEngine.showOutlines = false;
-            that.gameEngine.titleScreen = that;
 
-            var player = new Survivor(that.gameEngine, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
+            var player = new Survivor(thegame, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
             that.gameEngine.addEntity(player);
             that.gameEngine.player = player;
 
             for (var i = 0; i < 80; i++) {
-                var zombie = new Zombie(that.gameEngine, AM.getAsset("./src/img/zombie_sprite.png"))
+                var zombie = new Zombie(that.gameEngine, AM.getAsset("./src/img/zombie_sprite.png"));
                 if (distance(player, zombie) > 500) {
                     that.gameEngine.addEntity(zombie);
                 } else i--;
@@ -42,22 +41,23 @@ function TitleScreen(game, thegame){
             that.gameStarted = true;
 
             that.gameEngine.start("MainGame");
-            that.ctx.canvas.removeEventListener("click", startGame());
+            that.ctx.canvas.removeEventListener("click", startGame);
         }
     };
-
     this.ctx.canvas.addEventListener("click", startGame);
-}
-
-TitleScreen.prototype.setGameOver = function() {
-    this.animation = new Animation(AM.getAsset("./src/img/GameOver.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
-    this.gameStarted = false;
-    var reset = this.gameEngine.reset(this);
-    var click = this.ctx.canvas.addEventListener("click", reset);
 }
 
 TitleScreen.prototype = new Entity();
 TitleScreen.prototype.constructor = TitleScreen;
+
+TitleScreen.prototype.setGameOver = function() {
+    this.animation = new Animation(AM.getAsset("./src/img/GameOver.jpg"), 1600, 900, 1, 9999, 1, false, 1.0 , null);
+    this.gameStarted = false;
+    var that = this;
+    var click = this.ctx.canvas.addEventListener("click", function () {
+        that.gameEngine.reset(that, that.gameEngine.win);
+    });
+};
 
 TitleScreen.prototype.update = function() {
     this.x = 0;

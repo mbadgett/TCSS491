@@ -119,7 +119,7 @@ Survivor.prototype.shoot = function () {
 };
 
 Survivor.prototype.takeDamage = function () {
-    this.health -= 400;
+    this.health -= 250;
 };
 
 Survivor.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
@@ -176,6 +176,7 @@ Survivor.prototype.update = function () {
         //this.removeFromWorld = true;
         //this.over = true;
         //this.game.reset(this.game, false);
+        this.game.running = false;
         this.game.titleScreen.setGameOver();
     }
     /*
@@ -243,8 +244,9 @@ Survivor.prototype.checkWalls = function () {
     var currentCell = this.game.maze.grid[i][j];
     var bottomRight = this.game.maze.grid.length - 1;
     if (currentCell === this.game.maze.grid[bottomRight][bottomRight]) {
-        this.game.over = true;
         this.game.win = true;
+        this.game.running = false;
+        this.game.titleScreen.setGameOver();
     }
     /*
      First we are checking the gaps between our main cells that we draw.

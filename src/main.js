@@ -119,14 +119,14 @@ AM.downloadAll(function () {
     var gameEngine = new GameEngine();
     var titleScreen = new GameEngine();
     var gameOver = new GameEngine();
-
-    gameEngine.title = titleScreen;
-
+    
     titleScreen.init(ctx);
-    titleScreen.addEntity(new TitleScreen(titleScreen, gameEngine));
-
-    titleScreen.gameEngine = gameEngine;
-    gameEngine.gameOver = gameOver;
+    var ts = new TitleScreen(titleScreen, gameEngine);
+    titleScreen.addEntity(ts);
+    
+    gameEngine.titleScreen = ts;
+    
+    console.log(ts);
 
     titleScreen.start("titleScreen");
 

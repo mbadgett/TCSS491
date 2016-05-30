@@ -18,9 +18,8 @@ function GameEngine() {
     this.surfaceWidth = null;
     this.surfaceHeight = null;
     this.HUD = null;
-    this.over = false;
+    this.running = false;
     this.win = false;
-    this.gameOver = null;
 }
 
 GameEngine.prototype.init = function (ctx) {
@@ -33,6 +32,7 @@ GameEngine.prototype.init = function (ctx) {
 
 GameEngine.prototype.start = function (name) {
     console.log("starting " + name);
+    this.running = true;
     var that = this;
     (function gameLoop() {
         that.loop();
@@ -85,11 +85,13 @@ GameEngine.prototype.update = function () {
 };
 
 GameEngine.prototype.loop = function () {
-    this.clockTick = this.timer.tick();
-    this.update();
-    this.draw();
-    this.click = null;
-    this.wheel = null;
+    if (this.running) {
+        this.clockTick = this.timer.tick();
+        this.update();
+        this.draw();
+        this.click = null;
+        this.wheel = null;
+    }
 };
 
 GameEngine.prototype.initMaze = function (size) {
@@ -99,7 +101,10 @@ GameEngine.prototype.initMaze = function (size) {
 GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
     if (!referenceEngine.gameStarted) {
         this.entities = [];
-        if (isNewGame) this.initMaze(20);
+        if (isNewGame) {
+            this.initMaze(20);
+            this.win = false;
+        }
         this.player.x = 200;
         this.player.y = 200;
         this.player.health = 1000;
@@ -116,6 +121,7 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
             this.addEntity(new Pickup(this));
         }
         referenceEngine.gameStarted = true;
+        this.running = true;
     }
 };
 
