@@ -22,13 +22,13 @@ function TitleScreen(game, thegame){
             that.gameEngine.addEntity(player);
             that.gameEngine.player = player;
 
-            for (var i = 0; i < 20; i++) {
+            for (var i = 0; i < 40; i++) {
                 var zombie = new Zombie(that.gameEngine, AM.getAsset("./src/img/zombie_sprite.png"));
                 if (distance(player, zombie) > 500) {
                     that.gameEngine.addEntity(zombie);
                 } else i--;
             }
-            for (var i = 0; i < 20; i++) {
+            for (var i = 0; i < 12; i++) {
                 that.gameEngine.addEntity(new Pickup(that.gameEngine));
             }
 
