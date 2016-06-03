@@ -16,6 +16,8 @@ function Survivor(game, spritesheet) {
     this.sprinting = false;
     var that = this;
 
+    this.hasGPS = true;
+    this.hasMap = true;
 
     this.health = 1000;
     this.maxHealth = 1000;
