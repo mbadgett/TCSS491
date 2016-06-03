@@ -112,7 +112,7 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
         this.player.ammo = 60;
         this.player.water = 100;
         this.entities.push(this.player);
-        for (var i = 0; i < 20 + (20 * (this.level - 1) * (this.level - 1)); i++) {
+        for (var i = 0; i < 10 + (20 * (this.level - 1) * (this.level - 1)); i++) {
             var zombie = new Zombie(this, AM.getAsset("./src/img/zombie_sprite.png"));
             if (distance(this.player, zombie) > 500) {
                 this.addEntity(zombie);
