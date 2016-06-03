@@ -105,6 +105,8 @@ AM.queueDownload("./src/img/zombie_attack_sprite.png");
 AM.queueDownload("./src/img/pickups/ammo.png");
 AM.queueDownload("./src/img/pickups/health.png");
 AM.queueDownload("./src/img/pickups/radpills.png");
+AM.queueDownload("./src/img/pickups/map.png");
+AM.queueDownload("./src/img/pickups/gps.png");
 AM.queueDownload("./src/img/pickups/water.png");
 AM.queueDownload("./src/img/TitleScreen.jpg");
 AM.queueDownload("./src/img/GameOver.jpg");

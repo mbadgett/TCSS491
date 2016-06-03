@@ -13,12 +13,7 @@ function Pickup(game){
     Entity.call(this, game, Math.floor(Math.random() * game.maze.grid.length) * 400 + 200, Math.floor(Math.random() * game.maze.grid[0].length) * 400 + 200);
 }
 
-    Pickup.prototype.setMap = function() {
-        this.typeOf = 4;
-    }
-    Pickup.prototype.setGPS = function() {
-        this.typeOf = 5;
-    }
+
 
 // comment
 Pickup.prototype = new Entity();
@@ -76,6 +71,16 @@ Pickup.prototype.applyEffect = function () {
             this.player.hasGPS = true;
             break;
     }
+};
+
+Pickup.prototype.setMap = function() {
+    this.typeOf = 4;
+    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 6, 0.25, 6, true, 1, null);
+};
+
+Pickup.prototype.setGPS = function() {
+    this.typeOf = 5;
+    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 6, 0.25, 6, true, 1, null);
 };
 
 Pickup.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
