@@ -18,7 +18,7 @@ Zombie.prototype.constructor = Zombie;
 
 Zombie.prototype.update = function() {
     var distToPlayer = distance(this, this.player);
-    if (distToPlayer < 1000) {
+    if (distToPlayer < 700) {
         if (distToPlayer > this.radius * this.animation.scale) {
             this.x += this.speed * (this.player.x - this.x) /
                 (distance(this, this.player));
@@ -109,7 +109,7 @@ Zombie.prototype.checkWalls = function () {
 
 Zombie.prototype.detectCollision = function (theOther) {
     var dist = distance(this, theOther);
-    if (dist > 1000) return;
+    if (dist > 700) return;
     var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
     if (this.attacking && theOther instanceof Survivor) collisionRange *= 1.5;
     var diff = collisionRange - dist;
@@ -175,7 +175,7 @@ Zombie.prototype.takeDamage = function (damage) {
             pickup.y = this.y;
             this.game.addEntity(pickup);
         }
-        if (distance(spawn, this) > 1000) this.game.addEntity(spawn);
+        if (distance(spawn, this) > 700) this.game.addEntity(spawn);
     }
 };
 

@@ -18,7 +18,7 @@ Bullet.prototype = new Entity();
 Bullet.prototype.constructor = Bullet;
 
 Bullet.prototype.update = function() {
-    if (distance(this, this.game.player) > 1000) {
+    if (distance(this, this.game.player) > 700) {
         this.removeFromWorld = true;
     }
     if(this.checkWalls()) this.removeFromWorld = true;

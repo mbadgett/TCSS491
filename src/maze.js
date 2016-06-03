@@ -18,20 +18,20 @@ function Maze(gridSize, game) {
         }
     }
     for (i = 0; i < this.grid.length - 1; i++) {
-        for (var j = 0; j < this.grid[0].length; j++) {
+        for ( j = 0; j < this.grid[0].length; j++) {
             this.grid[i][j].right = this.grid[i + 1][j];
             this.grid[i + 1][j].left = this.grid[i][j];
         }
     }
     for (i = 0; i < this.grid.length; i++) {
-        for (var j = 0; j < this.grid[0].length - 1; j++) {
+        for ( j = 0; j < this.grid[0].length - 1; j++) {
             this.grid[i][j].down = this.grid[i][j + 1];
             this.grid[i][j + 1].up = this.grid[i][j];
         }
     }
     this.startMaze();
-    this.entrance = this.grid[0][0];
-    this.exit = this.grid[this.grid.length - 1][this.grid[0].length - 1];
+    // this.entrance = this.grid[0][0];
+    // this.exit = this.grid[this.grid.length - 1][this.grid[0].length - 1];
     for (i = 0; i < gridSize / 2; i++) {
         var cell = this.grid[Math.floor(1 + Math.random() * (this.grid.length - 2))][1 + Math.floor(Math.random() * (this.grid[0].length - 2))];
         cell.north = true;
@@ -67,8 +67,8 @@ Maze.prototype.buildMaze = function(cell) {
 Maze.prototype.draw = function(ctx) {
     var x = Math.floor(this.game.player.x / 400);
     var y = Math.floor(this.game.player.y / 400);
-    for (var i = x-3; i < x+4; i++) {
-        for (var j = y-2; j < y+3; j++) {
+    for (var i = x-2; i < x+3; i++) {
+        for (var j = y-1; j < y+2; j++) {
             if ( i >= 0 && j >= 0 && i < this.grid.length && j < this.grid.length) {
                 var cell = this.grid[i][j];
                 ctx.drawImage(this.squareFloor, i * 400, j * 400);
@@ -102,7 +102,7 @@ function MazeCell(u, r, d, l) {
 
 MazeCell.prototype.getRand = function() {
     var rtn = null;
-    var unvisited = new Array();
+    var unvisited = [];
     if (this.up != null && !this.up.visited) {
         unvisited.push(this.up);
     }

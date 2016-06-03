@@ -85,7 +85,7 @@ function Background(game, spritesheet) {
 
 Background.prototype.draw = function () {
     this.ctx.drawImage(this.spritesheet,
-                   this.x, this.y, 1600, 900);
+                   this.x, this.y, 1200, 720);
 };
 
 Background.prototype.update = function () {
@@ -113,8 +113,8 @@ AM.queueDownload("./src/img/HUD.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
-    ctx.canvas.width  = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
+    // ctx.canvas.width  = window.innerWidth;
+    // ctx.canvas.height = window.innerHeight;
 
     var gameEngine = new GameEngine();
     var titleScreen = new GameEngine();
