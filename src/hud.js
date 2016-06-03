@@ -54,6 +54,10 @@ HUD.prototype.draw = function () {
     this.ctx.fillStyle = "rgba(46, 130, 46, 1)";
     if (this.game.player.hasMap || this.game.player.hasGPS) {
         this.ctx.fillRect(mapPos.x, mapPos.y, mapSize, mapSize);
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeStyle = "black";
+        this.ctx.strokeRect(mapPos.x, mapPos.y, mapSize, mapSize);
+        this.ctx.lineWidth = 2;
     }
 
     if (this.game.player.hasMap) {
@@ -94,6 +98,8 @@ HUD.prototype.draw = function () {
         var px = mapPos.x + ((this.game.player.x / 400)* gridSpace) - (pw/2);
         var py = mapPos.y + ((this.game.player.y / 400) * gridSpace) - (ph/2);
         this.ctx.fillRect(px, py, pw, ph);
+        this.ctx.fillStyle = "rgba(0,255,0,1)";
+        this.ctx.fillRect(mapPos.x + mapSize - (pw * 2), mapPos.y + mapSize - (pw * 2), gridSpace / 3, gridSpace / 3);
     }
 
     this.ctx.restore();
