@@ -111,6 +111,8 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
         this.player.health = 1000;
         this.player.ammo = 60;
         this.player.water = 100;
+        this.hasGPS = false;
+        this.hasMap = false;
         this.entities.push(this.player);
         for (var i = 0; i < 10 + (20 * (this.level - 1) * (this.level - 1)); i++) {
             var zombie = new Zombie(this, AM.getAsset("./src/img/zombie_sprite.png"));
