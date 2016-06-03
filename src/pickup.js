@@ -2,7 +2,7 @@
  * Created by asic on 5/21/2016.
  */
 function Pickup(game){
-    this.types = ["health", "ammo", "water", "radpills"];
+    this.types = ["health", "ammo", "water", "radpills", "map", "gps"];
     this.typeOf = Math.floor(Math.random() * 3);
     this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 6, 0.25, 6, true, 1, null);
     this.radius = 32 * this.animation.scale;
@@ -12,6 +12,14 @@ function Pickup(game){
     this.game = game;
     Entity.call(this, game, Math.floor(Math.random() * game.maze.grid.length) * 400 + 200, Math.floor(Math.random() * game.maze.grid[0].length) * 400 + 200);
 }
+
+    Pickup.prototype.setMap = function() {
+        this.typeOf = 4;
+    }
+    Pickup.prototype.setGPS = function() {
+        this.typeOf = 5;
+    }
+
 // comment
 Pickup.prototype = new Entity();
 Pickup.prototype.constructor = Pickup;
@@ -51,12 +59,21 @@ Pickup.prototype.applyEffect = function () {
             if (this.game.player.water > this.game.player.maxWater) {
                 this.game.player.water = this.game.player.maxWater;
             }
+            break;
         case 3:
             //Rad Pills
             this.game.player.radiation -= 20;
             if ( this.game.player.radiation < 0 ) {
                 this.game.player.radiation = 0;
             }
+            break;
+        case 4:
+            //Map
+            this.player.hasMap = true;
+            break;
+        case 5:
+            //GPS
+            this.player.hasGPS = true;
             break;
     }
 };
