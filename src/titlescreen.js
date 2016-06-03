@@ -19,6 +19,8 @@ function TitleScreen(game, thegame){
 
             var player = new Survivor(thegame, AM.getAsset("./src/img/survivor_handgun_idle_sprite.png"));
             that.gameEngine.player = player;
+            that.gameEngine.player.hasGPS = false;
+            that.gameEngine.player.hasMap = false;
             that.gameEngine.reset(this, true);
             that.gameEngine.HUD = new HUD(that.gameEngine);
             that.gameEngine.ctx.canvas.addEventListener("resize", function (e) {
