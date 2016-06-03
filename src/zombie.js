@@ -169,7 +169,24 @@ Zombie.prototype.takeDamage = function (damage) {
     if (this.health <= 0) {
         this.removeFromWorld = true;
         var spawn = new Zombie(this.game, this.animation3.spriteSheet);
-        if (Math.random() > .80) {
+
+        if (Math.random() > .95) {
+            if (!this.game.player.hasMap) {
+                var pickup = new Pickup(this.game);
+                pickup.setMap();
+                pickup.x = this.x;
+                pickup.y = this.y;
+                this.game.addEntity(pickup);
+            }
+        }else if (Math.random() > .95) {
+            if (!this.game.player.hasGPS) {
+                var pickup = new Pickup(this.game);
+                pickup.setGPS();
+                pickup.x = this.x;
+                pickup.y = this.y;
+                this.game.addEntity(pickup);
+            }
+        } else if(Math.random() > .8) {
             var pickup = new Pickup(this.game);
             pickup.x = this.x;
             pickup.y = this.y;
