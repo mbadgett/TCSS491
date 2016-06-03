@@ -50,7 +50,7 @@ Pickup.prototype.applyEffect = function () {
             this.game.player.water += 55;
             if (this.game.player.water > this.game.player.maxWater) {
                 this.game.player.water = this.game.player.maxWater;
-            }d
+            }
         case 3:
             //Rad Pills
             this.game.player.radiation -= 20;

@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="feafa229-318c-4c85-8c2d-52f9e99faf17" name="Default" comment="The last thing needing implementation is the gameover screen.&#10;When the player dies or when they get tho the bottom right corner the game is over. Dying is a loss. Getting to the bottom right corner is a win.&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/img/pickups/ammo.png" afterPath="$PROJECT_DIR$/src/img/pickups/ammo.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/img/pickups/health.png" afterPath="$PROJECT_DIR$/src/img/pickups/health.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/img/pickups/water.png" afterPath="$PROJECT_DIR$/src/img/pickups/water.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hud.js" afterPath="$PROJECT_DIR$/src/hud.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pickup.js" afterPath="$PROJECT_DIR$/src/pickup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/survivor.js" afterPath="$PROJECT_DIR$/src/survivor.js" />
     </list>
     <ignored path="TCSS491-Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,38 +24,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="gameengine.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gameengine.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="hud.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/hud.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+            <state relative-caret-position="238">
+              <caret line="62" column="52" selection-start-line="62" selection-start-column="52" selection-end-line="62" selection-end-column="52" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-646">
-              <caret line="41" column="60" selection-start-line="41" selection-start-column="60" selection-end-line="41" selection-end-column="60" />
-              <folding>
-                <element signature="n#!!block;n#distance#0" expanded="false" />
-                <element signature="e#75#389#0" expanded="false" />
-                <element signature="e#395#425#0" expanded="false" />
-                <element signature="n#!!block;n#mouseDist#0" expanded="false" />
-                <element signature="e#475#690#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -68,77 +37,11 @@
       <file leaf-file-name="maze.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/maze.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
+            <state relative-caret-position="612">
               <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
               <folding>
                 <element signature="n#!!doc;n#Maze#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bullet.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/bullet.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1972">
-              <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc;n#Bullet#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="survivor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/survivor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="93" selection-start-line="28" selection-start-column="93" selection-end-line="28" selection-end-column="93" />
-              <folding>
-                <element signature="n#style#0;n#canvas#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="titlescreen.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/titlescreen.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pickup.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pickup.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc;n#Pickup#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="zombie.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/zombie.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2720">
-              <caret line="2" column="123" selection-start-line="2" selection-start-column="123" selection-end-line="2" selection-end-column="123" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -169,9 +72,9 @@
         <option value="$PROJECT_DIR$/src/gameengine.js" />
         <option value="$PROJECT_DIR$/src/main.js" />
         <option value="$PROJECT_DIR$/src/titlescreen.js" />
+        <option value="$PROJECT_DIR$/src/survivor.js" />
         <option value="$PROJECT_DIR$/src/pickup.js" />
         <option value="$PROJECT_DIR$/src/hud.js" />
-        <option value="$PROJECT_DIR$/src/survivor.js" />
       </list>
     </option>
   </component>
@@ -412,7 +315,7 @@
       <workItem from="1464119898537" duration="4392000" />
       <workItem from="1464292127530" duration="2734000" />
       <workItem from="1464424545236" duration="3202000" />
-      <workItem from="1464924277953" duration="582000" />
+      <workItem from="1464924277953" duration="2599000" />
     </task>
     <task id="LOCAL-00001" summary="Added floor images to the repository not using them yet.">
       <created>1463727585486</created>
@@ -474,7 +377,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73562000" />
+    <option name="totallyTimeSpent" value="75579000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -963,45 +866,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pickup.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/zombie.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2720">
           <caret line="2" column="123" selection-start-line="2" selection-start-column="123" selection-end-line="2" selection-end-column="123" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/maze.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc;n#Maze#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-646">
-          <caret line="41" column="60" selection-start-line="41" selection-start-column="60" selection-end-line="41" selection-end-column="60" />
-          <folding>
-            <element signature="n#!!block;n#distance#0" expanded="false" />
-            <element signature="e#75#389#0" expanded="false" />
-            <element signature="e#395#425#0" expanded="false" />
-            <element signature="n#!!block;n#mouseDist#0" expanded="false" />
-            <element signature="e#475#690#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1021,10 +890,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-646">
+          <caret line="41" column="60" selection-start-line="41" selection-start-column="60" selection-end-line="41" selection-end-column="60" />
+          <folding>
+            <element signature="n#!!block;n#distance#0" expanded="false" />
+            <element signature="e#75#389#0" expanded="false" />
+            <element signature="e#395#425#0" expanded="false" />
+            <element signature="n#!!block;n#mouseDist#0" expanded="false" />
+            <element signature="e#475#690#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/maze.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc;n#Maze#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pickup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/hud.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+        <state relative-caret-position="238">
+          <caret line="62" column="52" selection-start-line="62" selection-start-column="52" selection-end-line="62" selection-end-column="52" />
           <folding />
         </state>
       </provider>

@@ -48,14 +48,52 @@ HUD.prototype.draw = function () {
     this.ctx.fillText(this.game.player.ammo, 180, 134);
 
     //Minimap code
-    if (this.game.player.hasMap || this.game.player.hasGPS)
+    var mapSize = 180;
+    var mapPos = {x: 25, y: 160};
+    var gridSpace = mapSize / this.game.maze.grid.length;
+    this.ctx.fillStyle = "rgba(46, 130, 46, 1)";
+    if (this.game.player.hasMap || this.game.player.hasGPS) {
+        this.ctx.fillRect(mapPos.x, mapPos.y, mapSize, mapSize);
+    }
 
     if (this.game.player.hasMap) {
+        for(var x = 0; x < this.game.maze.grid.length; x++) {
+            for(var y = 0; y < this.game.maze.grid.length; y++) {
 
+                this.ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+                var dx = mapPos.x + (x * gridSpace);
+                var dy = mapPos.y + (y * gridSpace);
+                var dw = gridSpace;
+                var dh = gridSpace;
+                var cell = this.game.maze.grid[x][y];
+                this.ctx.strokeRect(dx,dy,dw,dh);
+
+
+                this.ctx.fillStyle = "rgba(46, 130, 46, 1)";
+                if (cell.north) {
+                    dy -= 1;
+                }
+                if (cell.south) {
+                    dh += 1;
+                }
+                if (cell.east) {
+                    dw += 1;
+                }
+                if (cell.west) {
+                    dx -= 1;
+                }
+                this.ctx.fillRect(dx,dy,dw,dh);
+            }
+        }
     }
 
     if (this.game.player.hasGPS) {
-
+        this.ctx.fillStyle = "yellow";
+        var pw = gridSpace / 3;
+        var ph = gridSpace / 3;
+        var px = mapPos.x + ((this.game.player.x / 400)* gridSpace) - (pw/2);
+        var py = mapPos.y + ((this.game.player.y / 400) * gridSpace) - (ph/2);
+        this.ctx.fillRect(px, py, pw, ph);
     }
 
     this.ctx.restore();
