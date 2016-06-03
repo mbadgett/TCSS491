@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="feafa229-318c-4c85-8c2d-52f9e99faf17" name="Default" comment="The last thing needing implementation is the gameover screen.&#10;When the player dies or when they get tho the bottom right corner the game is over. Dying is a loss. Getting to the bottom right corner is a win.&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zombie.js" afterPath="$PROJECT_DIR$/src/zombie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/survivor.js" afterPath="$PROJECT_DIR$/src/survivor.js" />
     </list>
     <ignored path="TCSS491-Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,10 +67,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="zombie.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="survivor.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/survivor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zombie.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/zombie.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
+            <state relative-caret-position="697">
               <caret line="189" column="47" selection-start-line="189" selection-start-column="47" selection-end-line="189" selection-end-column="47" />
               <folding />
             </state>
@@ -101,11 +111,11 @@
         <option value="$PROJECT_DIR$/src/maze.js" />
         <option value="$PROJECT_DIR$/src/gameengine.js" />
         <option value="$PROJECT_DIR$/src/main.js" />
-        <option value="$PROJECT_DIR$/src/survivor.js" />
         <option value="$PROJECT_DIR$/src/hud.js" />
         <option value="$PROJECT_DIR$/src/pickup.js" />
         <option value="$PROJECT_DIR$/src/titlescreen.js" />
         <option value="$PROJECT_DIR$/src/zombie.js" />
+        <option value="$PROJECT_DIR$/src/survivor.js" />
       </list>
     </option>
   </component>
@@ -346,7 +356,7 @@
       <workItem from="1464119898537" duration="4392000" />
       <workItem from="1464292127530" duration="2734000" />
       <workItem from="1464424545236" duration="3202000" />
-      <workItem from="1464924277953" duration="5501000" />
+      <workItem from="1464924277953" duration="5653000" />
     </task>
     <task id="LOCAL-00001" summary="Added floor images to the repository not using them yet.">
       <created>1463727585486</created>
@@ -408,7 +418,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78481000" />
+    <option name="totallyTimeSpent" value="78633000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -905,14 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/survivor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-646">
@@ -945,16 +947,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pickup.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/titlescreen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -965,8 +957,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/zombie.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
+        <state relative-caret-position="697">
           <caret line="189" column="47" selection-start-line="189" selection-start-column="47" selection-end-line="189" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pickup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/survivor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding />
         </state>
       </provider>
