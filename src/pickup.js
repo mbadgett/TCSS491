@@ -4,7 +4,7 @@
 function Pickup(game){
     this.types = ["health", "ammo", "water", "radpills"];
     this.typeOf = Math.floor(Math.random() * 3);
-    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 1, 9999, 1, true, 1, null);
+    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 6, 0.25, 6, true, 1, null);
     this.radius = 32 * this.animation.scale;
     this.player = game.player;
     this.ctx = game.ctx;
@@ -50,8 +50,7 @@ Pickup.prototype.applyEffect = function () {
             this.game.player.water += 55;
             if (this.game.player.water > this.game.player.maxWater) {
                 this.game.player.water = this.game.player.maxWater;
-            }
-            break;
+            }d
         case 3:
             //Rad Pills
             this.game.player.radiation -= 20;

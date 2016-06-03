@@ -46,6 +46,18 @@ HUD.prototype.draw = function () {
     this.ctx.fillStyle = "#000000";
     this.ctx.font="30px Verdana";
     this.ctx.fillText(this.game.player.ammo, 180, 134);
+
+    //Minimap code
+    if (this.game.player.hasMap || this.game.player.hasGPS)
+
+    if (this.game.player.hasMap) {
+
+    }
+
+    if (this.game.player.hasGPS) {
+
+    }
+
     this.ctx.restore();
     Entity.prototype.draw.call(this);
 };
