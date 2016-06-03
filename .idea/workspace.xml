@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="feafa229-318c-4c85-8c2d-52f9e99faf17" name="Default" comment="The last thing needing implementation is the gameover screen.&#10;When the player dies or when they get tho the bottom right corner the game is over. Dying is a loss. Getting to the bottom right corner is a win.&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/zombie.js" afterPath="$PROJECT_DIR$/src/zombie.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/bullet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/bullet.js" afterPath="$PROJECT_DIR$/src/bullet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.js" afterPath="$PROJECT_DIR$/src/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/survivor.js" afterPath="$PROJECT_DIR$/src/survivor.js" />
     </list>
     <ignored path="TCSS491-Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,8 +50,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="108" column="39" selection-start-line="108" selection-start-column="39" selection-end-line="108" selection-end-column="39" />
+            <state relative-caret-position="1411">
+              <caret line="99" column="34" selection-start-line="99" selection-start-column="34" selection-end-line="99" selection-end-column="34" />
               <folding>
                 <element signature="n#!!block;n#distance#0" expanded="false" />
                 <element signature="e#75#389#0" expanded="false" />
@@ -59,11 +63,33 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="bullet.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/bullet.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="4" column="107" selection-start-line="4" selection-start-column="107" selection-end-line="4" selection-end-column="107" />
+              <folding>
+                <element signature="n#!!doc;n#Bullet#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="survivor.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/survivor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1938">
+              <caret line="114" column="41" selection-start-line="114" selection-start-column="41" selection-end-line="114" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="pickup.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pickup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="82" column="140" selection-start-line="82" selection-start-column="140" selection-end-line="82" selection-end-column="140" />
+            <state relative-caret-position="748">
+              <caret line="101" column="37" selection-start-line="101" selection-start-column="37" selection-end-line="102" selection-end-column="76" />
               <folding>
                 <element signature="n#!!doc;n#Pickup#0" expanded="false" />
               </folding>
@@ -93,17 +119,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="survivor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/survivor.js">
+      <file leaf-file-name="assetmanager.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assetmanager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="19" selection-end-column="24" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="zombie.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="zombie.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/zombie.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="680">
@@ -132,16 +158,16 @@
         <option value="$PROJECT_DIR$/Zombie.js" />
         <option value="$PROJECT_DIR$/src/Survivor.js" />
         <option value="$PROJECT_DIR$/src/Zombie.js" />
-        <option value="$PROJECT_DIR$/src/bullet.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/maze.js" />
         <option value="$PROJECT_DIR$/src/hud.js" />
-        <option value="$PROJECT_DIR$/src/survivor.js" />
         <option value="$PROJECT_DIR$/src/pickup.js" />
-        <option value="$PROJECT_DIR$/src/main.js" />
         <option value="$PROJECT_DIR$/src/titlescreen.js" />
         <option value="$PROJECT_DIR$/src/gameengine.js" />
         <option value="$PROJECT_DIR$/src/zombie.js" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/survivor.js" />
+        <option value="$PROJECT_DIR$/src/bullet.js" />
       </list>
     </option>
   </component>
@@ -268,8 +294,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\asic\WebstormProjects\TCSS491-Project\src\img\pickups" />
       <recent name="C:\Users\asic\WebstormProjects\TCSS491-Project\src\img" />
+      <recent name="C:\Users\asic\WebstormProjects\TCSS491-Project\src\img\pickups" />
       <recent name="C:\Users\Admin\WebstormProjects\TCSS491\src" />
       <recent name="C:\Users\Asic\Documents\GitHub\TCSS491\src\img" />
     </key>
@@ -382,7 +408,7 @@
       <workItem from="1464119898537" duration="4392000" />
       <workItem from="1464292127530" duration="2734000" />
       <workItem from="1464424545236" duration="3202000" />
-      <workItem from="1464924277953" duration="6070000" />
+      <workItem from="1464924277953" duration="7077000" />
     </task>
     <task id="LOCAL-00001" summary="Added floor images to the repository not using them yet.">
       <created>1463727585486</created>
@@ -444,10 +470,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79050000" />
+    <option name="totallyTimeSpent" value="80057000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13645834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -887,23 +913,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/bullet.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1972">
-          <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#Bullet#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assetmanager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -914,60 +923,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/maze.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc;n#Maze#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/hud.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pickup.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="82" column="140" selection-start-line="82" selection-start-column="140" selection-end-line="82" selection-end-column="140" />
-          <folding>
-            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="108" column="39" selection-start-line="108" selection-start-column="39" selection-end-line="108" selection-end-column="39" />
-          <folding>
-            <element signature="n#!!block;n#distance#0" expanded="false" />
-            <element signature="e#75#389#0" expanded="false" />
-            <element signature="e#395#425#0" expanded="false" />
-            <element signature="n#!!block;n#mouseDist#0" expanded="false" />
-            <element signature="e#475#690#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/titlescreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="57" selection-start-line="50" selection-start-column="57" selection-end-line="50" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/survivor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="19" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -985,6 +944,74 @@
         <state relative-caret-position="680">
           <caret line="188" column="37" selection-start-line="188" selection-start-column="37" selection-end-line="188" selection-end-column="37" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assetmanager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pickup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="101" column="37" selection-start-line="101" selection-start-column="37" selection-end-line="102" selection-end-column="76" />
+          <folding>
+            <element signature="n#!!doc;n#Pickup#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/maze.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc;n#Maze#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/titlescreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" column="57" selection-start-line="50" selection-start-column="57" selection-end-line="50" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/survivor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1938">
+          <caret line="114" column="41" selection-start-line="114" selection-start-column="41" selection-end-line="114" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1411">
+          <caret line="99" column="34" selection-start-line="99" selection-start-column="34" selection-end-line="99" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!block;n#distance#0" expanded="false" />
+            <element signature="e#75#389#0" expanded="false" />
+            <element signature="e#395#425#0" expanded="false" />
+            <element signature="n#!!block;n#mouseDist#0" expanded="false" />
+            <element signature="e#475#690#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bullet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="4" column="107" selection-start-line="4" selection-start-column="107" selection-end-line="4" selection-end-column="107" />
+          <folding>
+            <element signature="n#!!doc;n#Bullet#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

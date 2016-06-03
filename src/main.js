@@ -97,7 +97,7 @@ AM.queueDownload("./src/img/background.jpg");
 AM.queueDownload("./src/img/survivor_move_handgun_sprite.png");
 AM.queueDownload("./src/img/survivor_handgun_idle_sprite.png");
 AM.queueDownload("./src/img/zombie_sprite.png");
-AM.queueDownload("./src/img/Glenos-G_160_bullet.png");
+AM.queueDownload("./src/img/bullet.png");
 AM.queueDownload("./src/img/3x3.png");
 AM.queueDownload("./src/img/3x1.png");
 AM.queueDownload("./src/img/1x3.png");
