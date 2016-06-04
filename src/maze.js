@@ -3,9 +3,25 @@
  */
 function Maze(gridSize, game) {
     this.game = game;
-    this.squareFloor = AM.getAsset("./src/img/3x3.png");
-    this.horiFloor = AM.getAsset("./src/img/1x3.png");
-    this.vertFloor = AM.getAsset("./src/img/3x1.png");
+    this.squareFloor = [];
+
+    this.squareFloor[0] = AM.getAsset("./src/img/floors/default_floor/3x3.png");
+    this.squareFloor[1] = AM.getAsset("./src/img/floors/mossy_floor/3x3.png");
+    this.squareFloor[2] = AM.getAsset("./src/img/floors/default_floor/3x3.png");
+
+    this.horiFloor = [];
+    this.horiFloor[0] = AM.getAsset("./src/img/floors/default_floor/1x3.png");
+    this.horiFloor[1] = AM.getAsset("./src/img/floors/mossy_floor/1x3.png");
+    this.horiFloor[2] = AM.getAsset("./src/img/floors/default_floor/1x3.png");
+
+    this.vertFloor = [];
+    this.vertFloor [0] = AM.getAsset("./src/img/floors/default_floor/3x1.png");
+    this.vertFloor [1] = AM.getAsset("./src/img/floors/mossy_floor/3x1.png");
+    this.vertFloor [2] = AM.getAsset("./src/img/floors/default_floor/3x1.png");
+
+    this.squareWall = AM.getAsset("./src/img/walls/mossy_floor/1x1.png");
+    this.horiWall = AM.getAsset("./src/img/walls/mossy_floor/1x3.png");
+    this.vertWall = AM.getAsset("./src/img/walls/mossy_floor/3x1.png");
     this.grid = new Array(gridSize);
     for (var i = 0; i < gridSize; i++) {
         this.grid[i] = new Array(gridSize);
@@ -71,9 +87,12 @@ Maze.prototype.draw = function(ctx) {
         for (var j = y-1; j < y+2; j++) {
             if ( i >= 0 && j >= 0 && i < this.grid.length && j < this.grid.length) {
                 var cell = this.grid[i][j];
-                ctx.drawImage(this.squareFloor, i * 400, j * 400);
-                if (cell.east) ctx.drawImage(this.horiFloor, i * 400 + 300, j * 400);
-                if (cell.south) ctx.drawImage(this.vertFloor, i * 400, j * 400 + 300);
+                ctx.drawImage(this.squareFloor[this.game.level - 1], i * 400, j * 400);
+                if (cell.east) ctx.drawImage(this.horiFloor[this.game.level - 1], i * 400 + 300, j * 400);
+                else ctx.drawImage(this.horiWall, i * 400 + 300, j * 400);
+                if (cell.south) ctx.drawImage(this.vertFloor[this.game.level - 1], i * 400, j * 400 + 300);
+                else ctx.drawImage(this.vertWall, i * 400, j * 400 + 300);
+                ctx.drawImage(this.squareWall, i * 400 + 300, j * 400 + 300);
             }
         }
     }

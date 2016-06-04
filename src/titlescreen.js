@@ -43,10 +43,10 @@ TitleScreen.prototype.setGameOver = function() {
     if (this.gameEngine.win) {
         this.animation = AM.getAsset("./src/img/GameWin.jpg");
         this.gameEngine.level++;
-        this.gameEngine.player.hasGPS = false;
-        this.gameEngine.player.hasMap = false;
     }
     else this.animation = AM.getAsset("./src/img/GameOver.jpg");
+    this.gameEngine.player.hasGPS = false;
+    this.gameEngine.player.hasMap = false;
     this.gameStarted = false;
     var that = this;
     var click = this.ctx.canvas.addEventListener("click", function () {

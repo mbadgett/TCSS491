@@ -120,7 +120,7 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
                 this.addEntity(zombie);
             } else i--;
         }
-        for (var i = 0; i < 10 * this.level; i++) {
+        for (i = 0; i < 10 * this.level; i++) {
             this.addEntity(new Pickup(this));
         }
         referenceEngine.gameStarted = true;
