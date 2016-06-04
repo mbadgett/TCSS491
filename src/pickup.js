@@ -2,9 +2,9 @@
  * Created by asic on 5/21/2016.
  */
 function Pickup(game){
-    this.types = ["health", "ammo", "water", "radpills"];
+    this.types = ["health", "ammo", "water", "radpills", "map", "gps"];
     this.typeOf = Math.floor(Math.random() * 3);
-    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 1, 9999, 1, true, 1, null);
+    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 6, 0.25, 6, true, 1, null);
     this.radius = 32 * this.animation.scale;
     this.player = game.player;
     this.ctx = game.ctx;
@@ -12,6 +12,9 @@ function Pickup(game){
     this.game = game;
     Entity.call(this, game, Math.floor(Math.random() * game.maze.grid.length) * 400 + 200, Math.floor(Math.random() * game.maze.grid[0].length) * 400 + 200);
 }
+
+
+
 // comment
 Pickup.prototype = new Entity();
 Pickup.prototype.constructor = Pickup;
@@ -59,7 +62,25 @@ Pickup.prototype.applyEffect = function () {
                 this.game.player.radiation = 0;
             }
             break;
+        case 4:
+            //Map
+            this.player.hasMap = true;
+            break;
+        case 5:
+            //GPS
+            this.player.hasGPS = true;
+            break;
     }
+};
+
+Pickup.prototype.setMap = function() {
+    this.typeOf = 4;
+    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 6, 0.25, 6, true, 1, null);
+};
+
+Pickup.prototype.setGPS = function() {
+    this.typeOf = 5;
+    this.animation = new Animation(AM.getAsset("./src/img/pickups/" + this.types[this.typeOf] + ".png"), 64, 64, 6, 0.25, 6, true, 1, null);
 };
 
 Pickup.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {

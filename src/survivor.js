@@ -16,6 +16,8 @@ function Survivor(game, spritesheet) {
     this.sprinting = false;
     var that = this;
 
+    this.hasGPS = false;
+    this.hasMap = false;
 
     this.health = 1000;
     this.maxHealth = 1000;
@@ -110,6 +112,7 @@ Survivor.prototype.shoot = function () {
         var realX = this.x + (this.animation.frameWidth * this.animation.scale / 2);
         var realY = this.y + (this.animation.frameHeight * this.animation.scale / 2);
         var theBullet = new Bullet(this.game, realX, realY);
+        theBullet.myAngle = this.myAngle;
         console.log(parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY})
             + ", " + parseFloat(this.mouseX - realX) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));
         theBullet.velocity.y *= (parseFloat(this.mouseY - realY) / mouseDist(this, {x: this.mouseX, y: this.mouseY}));

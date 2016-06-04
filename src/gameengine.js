@@ -14,6 +14,7 @@ function GameEngine() {
     this.player = null;
     this.maze = null;
     this.ctx = null;
+    this.level = 1;
     this.click = null;
     this.surfaceWidth = null;
     this.surfaceHeight = null;
@@ -59,7 +60,7 @@ GameEngine.prototype.draw = function () {
     }
     for (var i = 0; i < this.entities.length; i++) {
         var entity = this.entities[i];
-        if (distance(entity, this.player) < 1000)
+        if (distance(entity, this.player) < 700)
             entity.draw(this.ctx);
     }
 
@@ -102,7 +103,7 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
     if (!referenceEngine.gameStarted) {
         this.entities = [];
         if (isNewGame) {
-            this.initMaze(10);
+            this.initMaze(this.level * 5);
             this.win = false;
         }
         this.player.x = 200;
@@ -110,14 +111,16 @@ GameEngine.prototype.reset = function(referenceEngine, isNewGame) {
         this.player.health = 1000;
         this.player.ammo = 60;
         this.player.water = 100;
+        this.hasGPS = false;
+        this.hasMap = false;
         this.entities.push(this.player);
-        for (var i = 0; i < 40; i++) {
-            var zombie = new Zombie(this, AM.getAsset("./src/img/zombie_sprite.png"))
+        for (var i = 0; i < 10 + (20 * (this.level - 1) * (this.level - 1)); i++) {
+            var zombie = new Zombie(this, AM.getAsset("./src/img/zombie_sprite.png"));
             if (distance(this.player, zombie) > 500) {
                 this.addEntity(zombie);
             } else i--;
         }
-        for (var i = 0; i < 12; i++) {
+        for (i = 0; i < 10 * this.level; i++) {
             this.addEntity(new Pickup(this));
         }
         referenceEngine.gameStarted = true;

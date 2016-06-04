@@ -3,9 +3,25 @@
  */
 function Maze(gridSize, game) {
     this.game = game;
-    this.squareFloor = AM.getAsset("./src/img/3x3.png");
-    this.horiFloor = AM.getAsset("./src/img/1x3.png");
-    this.vertFloor = AM.getAsset("./src/img/3x1.png");
+    this.squareFloor = [];
+
+    this.squareFloor[0] = AM.getAsset("./src/img/floors/default_floor/3x3.png");
+    this.squareFloor[1] = AM.getAsset("./src/img/floors/mossy_floor/3x3.png");
+    this.squareFloor[2] = AM.getAsset("./src/img/floors/dungeon_floor/3x3.png");
+
+    this.horiFloor = [];
+    this.horiFloor[0] = AM.getAsset("./src/img/floors/default_floor/1x3.png");
+    this.horiFloor[1] = AM.getAsset("./src/img/floors/mossy_floor/1x3.png");
+    this.horiFloor[2] = AM.getAsset("./src/img/floors/dungeon_floor/1x3.png");
+
+    this.vertFloor = [];
+    this.vertFloor [0] = AM.getAsset("./src/img/floors/default_floor/3x1.png");
+    this.vertFloor [1] = AM.getAsset("./src/img/floors/mossy_floor/3x1.png");
+    this.vertFloor [2] = AM.getAsset("./src/img/floors/dungeon_floor/3x1.png");
+
+    this.squareWall = AM.getAsset("./src/img/walls/mossy_floor/1x1.png");
+    this.horiWall = AM.getAsset("./src/img/walls/mossy_floor/1x3.png");
+    this.vertWall = AM.getAsset("./src/img/walls/mossy_floor/3x1.png");
     this.grid = new Array(gridSize);
     for (var i = 0; i < gridSize; i++) {
         this.grid[i] = new Array(gridSize);
@@ -18,20 +34,20 @@ function Maze(gridSize, game) {
         }
     }
     for (i = 0; i < this.grid.length - 1; i++) {
-        for (var j = 0; j < this.grid[0].length; j++) {
+        for ( j = 0; j < this.grid[0].length; j++) {
             this.grid[i][j].right = this.grid[i + 1][j];
             this.grid[i + 1][j].left = this.grid[i][j];
         }
     }
     for (i = 0; i < this.grid.length; i++) {
-        for (var j = 0; j < this.grid[0].length - 1; j++) {
+        for ( j = 0; j < this.grid[0].length - 1; j++) {
             this.grid[i][j].down = this.grid[i][j + 1];
             this.grid[i][j + 1].up = this.grid[i][j];
         }
     }
     this.startMaze();
-    this.entrance = this.grid[0][0];
-    this.exit = this.grid[this.grid.length - 1][this.grid[0].length - 1];
+    // this.entrance = this.grid[0][0];
+    // this.exit = this.grid[this.grid.length - 1][this.grid[0].length - 1];
     for (i = 0; i < gridSize / 2; i++) {
         var cell = this.grid[Math.floor(1 + Math.random() * (this.grid.length - 2))][1 + Math.floor(Math.random() * (this.grid[0].length - 2))];
         cell.north = true;
@@ -67,13 +83,18 @@ Maze.prototype.buildMaze = function(cell) {
 Maze.prototype.draw = function(ctx) {
     var x = Math.floor(this.game.player.x / 400);
     var y = Math.floor(this.game.player.y / 400);
-    for (var i = x-3; i < x+4; i++) {
-        for (var j = y-2; j < y+3; j++) {
+    var level = this.game.level;
+    if (level > 3) level = 3;
+    for (var i = x-2; i < x+3; i++) {
+        for (var j = y-1; j < y+2; j++) {
             if ( i >= 0 && j >= 0 && i < this.grid.length && j < this.grid.length) {
                 var cell = this.grid[i][j];
-                ctx.drawImage(this.squareFloor, i * 400, j * 400);
-                if (cell.east) ctx.drawImage(this.horiFloor, i * 400 + 300, j * 400);
-                if (cell.south) ctx.drawImage(this.vertFloor, i * 400, j * 400 + 300);
+                ctx.drawImage(this.squareFloor[level - 1], i * 400, j * 400);
+                if (cell.east) ctx.drawImage(this.horiFloor[level - 1], i * 400 + 300, j * 400);
+                else ctx.drawImage(this.horiWall, i * 400 + 300, j * 400);
+                if (cell.south) ctx.drawImage(this.vertFloor[level - 1], i * 400, j * 400 + 300);
+                else ctx.drawImage(this.vertWall, i * 400, j * 400 + 300);
+                ctx.drawImage(this.squareWall, i * 400 + 300, j * 400 + 300);
             }
         }
     }
@@ -102,7 +123,7 @@ function MazeCell(u, r, d, l) {
 
 MazeCell.prototype.getRand = function() {
     var rtn = null;
-    var unvisited = new Array();
+    var unvisited = [];
     if (this.up != null && !this.up.visited) {
         unvisited.push(this.up);
     }

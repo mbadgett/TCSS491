@@ -18,7 +18,7 @@ Zombie.prototype.constructor = Zombie;
 
 Zombie.prototype.update = function() {
     var distToPlayer = distance(this, this.player);
-    if (distToPlayer < 1000) {
+    if (distToPlayer < 700) {
         if (distToPlayer > this.radius * this.animation.scale) {
             this.x += this.speed * (this.player.x - this.x) /
                 (distance(this, this.player));
@@ -109,7 +109,7 @@ Zombie.prototype.checkWalls = function () {
 
 Zombie.prototype.detectCollision = function (theOther) {
     var dist = distance(this, theOther);
-    if (dist > 1000) return;
+    if (dist > 700) return;
     var collisionRange = this.radius * this.animation.scale + theOther.radius * theOther.animation.scale;
     if (this.attacking && theOther instanceof Survivor) collisionRange *= 1.5;
     var diff = collisionRange - dist;
@@ -138,6 +138,8 @@ Zombie.prototype.detectCollision = function (theOther) {
         else if (theOther instanceof Bullet) {
             this.takeDamage(theOther.damage());
             theOther.removeFromWorld = true;
+        } else if (theOther instanceof Pickup) {
+            //do Nothing
         } else {
             if (this.x < theOther.x) {
                 this.x -= diff / 2;
@@ -169,13 +171,30 @@ Zombie.prototype.takeDamage = function (damage) {
     if (this.health <= 0) {
         this.removeFromWorld = true;
         var spawn = new Zombie(this.game, this.animation3.spriteSheet);
-        if (Math.random() > .80) {
+
+        if (Math.random() > .98) {
+            if (!this.game.player.hasMap) {
+                var pickup = new Pickup(this.game);
+                pickup.setMap();
+                pickup.x = this.x;
+                pickup.y = this.y;
+                this.game.addEntity(pickup);
+            }
+        }else if (Math.random() > .98) {
+            if (!this.game.player.hasGPS) {
+                var pickup = new Pickup(this.game);
+                pickup.setGPS();
+                pickup.x = this.x;
+                pickup.y = this.y;
+                this.game.addEntity(pickup);
+            }
+        } else if(Math.random() > .85) {
             var pickup = new Pickup(this.game);
             pickup.x = this.x;
             pickup.y = this.y;
             this.game.addEntity(pickup);
         }
-        if (distance(spawn, this) > 1000) this.game.addEntity(spawn);
+        if (distance(spawn, this) > 700) this.game.addEntity(spawn);
     }
 };
 

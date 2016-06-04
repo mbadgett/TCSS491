@@ -2,7 +2,7 @@
  * Created by Asic on 5/18/2016.
  */
 function Bullet(game, x, y){
-    this.animation = new Animation(AM.getAsset("./src/img/Glenos-G_160_bullet.png"), 16, 16, 1, 9999, 1, false, 1.0 , null);
+    this.animation = new Animation(AM.getAsset("./src/img/bullet.png"), 8, 8, 1, 9999, 1, false, 1.0 , this);
     this.speed = 1;
     this.radius = 5 * this.animation.scale;
     this.player = game.player;
@@ -18,7 +18,7 @@ Bullet.prototype = new Entity();
 Bullet.prototype.constructor = Bullet;
 
 Bullet.prototype.update = function() {
-    if (distance(this, this.game.player) > 1000) {
+    if (distance(this, this.game.player) > 700) {
         this.removeFromWorld = true;
     }
     if(this.checkWalls()) this.removeFromWorld = true;
@@ -136,10 +136,11 @@ Bullet.prototype.rotateAndCache = function (that, sx, sy, sw, sh, angle) {
 };
 
 Bullet.prototype.draw = function () {
-    this.ctx.strokeStyle = "#00FFFF";
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.radius * this.animation.scale, 0, Math.PI * 2, false);
-    this.ctx.stroke();
-    this.ctx.closePath();
+    // this.ctx.strokeStyle = "#00FFFF";
+    // this.ctx.beginPath();
+    // this.ctx.arc(this.x, this.y, this.radius * this.animation.scale, 0, Math.PI * 2, false);
+    // this.ctx.stroke();
+    // this.ctx.closePath();
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     Entity.prototype.draw.call(this);
 };

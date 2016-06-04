@@ -85,7 +85,7 @@ function Background(game, spritesheet) {
 
 Background.prototype.draw = function () {
     this.ctx.drawImage(this.spritesheet,
-                   this.x, this.y, 1600, 900);
+                   this.x, this.y, 1200, 720);
 };
 
 Background.prototype.update = function () {
@@ -97,14 +97,30 @@ AM.queueDownload("./src/img/background.jpg");
 AM.queueDownload("./src/img/survivor_move_handgun_sprite.png");
 AM.queueDownload("./src/img/survivor_handgun_idle_sprite.png");
 AM.queueDownload("./src/img/zombie_sprite.png");
-AM.queueDownload("./src/img/Glenos-G_160_bullet.png");
-AM.queueDownload("./src/img/3x3.png");
-AM.queueDownload("./src/img/3x1.png");
-AM.queueDownload("./src/img/1x3.png");
+AM.queueDownload("./src/img/bullet.png");
+
+AM.queueDownload("./src/img/floors/default_floor/3x3.png");
+AM.queueDownload("./src/img/floors/default_floor/3x1.png");
+AM.queueDownload("./src/img/floors/default_floor/1x3.png");
+
+AM.queueDownload("./src/img/floors/mossy_floor/3x3.png");
+AM.queueDownload("./src/img/floors/mossy_floor/3x1.png");
+AM.queueDownload("./src/img/floors/mossy_floor/1x3.png");
+
+AM.queueDownload("./src/img/floors/dungeon_floor/3x3.png");
+AM.queueDownload("./src/img/floors/dungeon_floor/3x1.png");
+AM.queueDownload("./src/img/floors/dungeon_floor/1x3.png");
+
+AM.queueDownload("./src/img/walls/mossy_floor/1x1.png");
+AM.queueDownload("./src/img/walls/mossy_floor/3x1.png");
+AM.queueDownload("./src/img/walls/mossy_floor/1x3.png");
+
 AM.queueDownload("./src/img/zombie_attack_sprite.png");
 AM.queueDownload("./src/img/pickups/ammo.png");
 AM.queueDownload("./src/img/pickups/health.png");
 AM.queueDownload("./src/img/pickups/radpills.png");
+AM.queueDownload("./src/img/pickups/map.png");
+AM.queueDownload("./src/img/pickups/gps.png");
 AM.queueDownload("./src/img/pickups/water.png");
 AM.queueDownload("./src/img/TitleScreen.jpg");
 AM.queueDownload("./src/img/GameOver.jpg");
@@ -113,8 +129,8 @@ AM.queueDownload("./src/img/HUD.png");
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
-    ctx.canvas.width  = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
+    // ctx.canvas.width  = window.innerWidth;
+    // ctx.canvas.height = window.innerHeight;
 
     var gameEngine = new GameEngine();
     var titleScreen = new GameEngine();
