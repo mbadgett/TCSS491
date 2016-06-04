@@ -83,14 +83,16 @@ Maze.prototype.buildMaze = function(cell) {
 Maze.prototype.draw = function(ctx) {
     var x = Math.floor(this.game.player.x / 400);
     var y = Math.floor(this.game.player.y / 400);
+    var level = this.game.level;
+    if (level > 3) level = 3;
     for (var i = x-2; i < x+3; i++) {
         for (var j = y-1; j < y+2; j++) {
             if ( i >= 0 && j >= 0 && i < this.grid.length && j < this.grid.length) {
                 var cell = this.grid[i][j];
-                ctx.drawImage(this.squareFloor[this.game.level - 1], i * 400, j * 400);
-                if (cell.east) ctx.drawImage(this.horiFloor[this.game.level - 1], i * 400 + 300, j * 400);
+                ctx.drawImage(this.squareFloor[level - 1], i * 400, j * 400);
+                if (cell.east) ctx.drawImage(this.horiFloor[level - 1], i * 400 + 300, j * 400);
                 else ctx.drawImage(this.horiWall, i * 400 + 300, j * 400);
-                if (cell.south) ctx.drawImage(this.vertFloor[this.game.level - 1], i * 400, j * 400 + 300);
+                if (cell.south) ctx.drawImage(this.vertFloor[level - 1], i * 400, j * 400 + 300);
                 else ctx.drawImage(this.vertWall, i * 400, j * 400 + 300);
                 ctx.drawImage(this.squareWall, i * 400 + 300, j * 400 + 300);
             }
