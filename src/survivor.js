@@ -43,7 +43,7 @@ function Survivor(game, spritesheet) {
             that.s = true;
             that.animation = that.animation2;
         }
-        if (e.code === "KeyF") {
+        if (e.code === "Space") {
             that.shoot();
         }
         if (e.keyCode === 16 && that.water > 1) {
