@@ -7,17 +7,17 @@ function Maze(gridSize, game) {
 
     this.squareFloor[0] = AM.getAsset("./src/img/floors/default_floor/3x3.png");
     this.squareFloor[1] = AM.getAsset("./src/img/floors/mossy_floor/3x3.png");
-    this.squareFloor[2] = AM.getAsset("./src/img/floors/default_floor/3x3.png");
+    this.squareFloor[2] = AM.getAsset("./src/img/floors/dungeon_floor/3x3.png");
 
     this.horiFloor = [];
     this.horiFloor[0] = AM.getAsset("./src/img/floors/default_floor/1x3.png");
     this.horiFloor[1] = AM.getAsset("./src/img/floors/mossy_floor/1x3.png");
-    this.horiFloor[2] = AM.getAsset("./src/img/floors/default_floor/1x3.png");
+    this.horiFloor[2] = AM.getAsset("./src/img/floors/dungeon_floor/1x3.png");
 
     this.vertFloor = [];
     this.vertFloor [0] = AM.getAsset("./src/img/floors/default_floor/3x1.png");
     this.vertFloor [1] = AM.getAsset("./src/img/floors/mossy_floor/3x1.png");
-    this.vertFloor [2] = AM.getAsset("./src/img/floors/default_floor/3x1.png");
+    this.vertFloor [2] = AM.getAsset("./src/img/floors/dungeon_floor/3x1.png");
 
     this.squareWall = AM.getAsset("./src/img/walls/mossy_floor/1x1.png");
     this.horiWall = AM.getAsset("./src/img/walls/mossy_floor/1x3.png");
