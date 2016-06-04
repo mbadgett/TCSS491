@@ -138,6 +138,8 @@ Zombie.prototype.detectCollision = function (theOther) {
         else if (theOther instanceof Bullet) {
             this.takeDamage(theOther.damage());
             theOther.removeFromWorld = true;
+        } else if (theOther instanceof Pickup) {
+            //do Nothing
         } else {
             if (this.x < theOther.x) {
                 this.x -= diff / 2;
