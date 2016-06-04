@@ -172,7 +172,7 @@ Zombie.prototype.takeDamage = function (damage) {
         this.removeFromWorld = true;
         var spawn = new Zombie(this.game, this.animation3.spriteSheet);
 
-        if (Math.random() > .98) {
+        if (Math.random() > .90) {
             if (!this.game.player.hasMap) {
                 var pickup = new Pickup(this.game);
                 pickup.setMap();
@@ -180,7 +180,7 @@ Zombie.prototype.takeDamage = function (damage) {
                 pickup.y = this.y;
                 this.game.addEntity(pickup);
             }
-        }else if (Math.random() > .98) {
+        }else if (Math.random() > .90) {
             if (!this.game.player.hasGPS) {
                 var pickup = new Pickup(this.game);
                 pickup.setGPS();
