@@ -23,6 +23,14 @@
             /*height: 100%;*/
             /*max-width: 100%;*/
         /*}*/
+        .unselectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -31,7 +39,7 @@
             <td>
                 <canvas id="gameWorld" width="1200px" height="720px" tabindex="1" style="background: black;"></canvas>
             </td>
-            <td>
+            <td class="unselectable">
                 <p>Welcome to the maZe of the undead. Beware that once you enter you will die.....eventually
                     You are the lone survivor in this mad world and all you have to defend yourself with is your
                     pistol These Zombies are not like the slow moving walkers from the walking dead, no these zombies are predators</p>
